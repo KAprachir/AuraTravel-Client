@@ -7,7 +7,7 @@ import { apiFetch } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -333,9 +333,15 @@ export default function ExplorePage() {
                     <span className="text-[10px] text-slate-500 uppercase block leading-none">Cost</span>
                     <span className="text-lg font-extrabold text-teal-400">${itinerary.cost.toLocaleString()}</span>
                   </div>
-                  <Button asChild variant="outline" className="border-teal-500/30 text-teal-400 hover:text-white hover:bg-teal-500 h-8 text-xs font-bold transition-all">
-                    <Link href={`/itineraries/${itinerary._id}`}>View Details</Link>
-                  </Button>
+                  <Link
+                    href={`/itineraries/${itinerary._id}`}
+                    className={buttonVariants({
+                      variant: "outline",
+                      className: "border-teal-500/30 text-teal-400 hover:text-white hover:bg-teal-500 h-8 px-3 rounded-lg text-xs font-bold flex items-center justify-center transition-all cursor-pointer"
+                    })}
+                  >
+                    View Details
+                  </Link>
                 </CardFooter>
               </Card>
             ))}

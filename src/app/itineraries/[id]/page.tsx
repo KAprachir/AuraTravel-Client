@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MapPin, Clock, Star, Tag, Calendar, User, ArrowLeft, CheckCircle } from "lucide-react";
@@ -82,9 +82,14 @@ export default function ItineraryDetailsPage({ params }: { params: Promise<{ id:
         <main className="flex-grow flex flex-col justify-center items-center py-16">
           <p className="text-rose-400 font-semibold mb-2">Error Loading Itinerary</p>
           <p className="text-slate-500 text-sm mb-4">The requested itinerary could not be found.</p>
-          <Button asChild className="bg-teal-500 hover:bg-teal-600 text-slate-950">
-            <Link href="/itineraries">Back to Explore</Link>
-          </Button>
+          <Link
+            href="/itineraries"
+            className={buttonVariants({
+              className: "bg-teal-500 hover:bg-teal-600 text-slate-950 font-semibold cursor-pointer"
+            })}
+          >
+            Back to Explore
+          </Link>
         </main>
         <Footer />
       </div>
@@ -223,15 +228,15 @@ export default function ItineraryDetailsPage({ params }: { params: Promise<{ id:
                 <Button className="w-full bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold py-2">
                   Book This Trip
                 </Button>
-                <Button
-                  variant="outline"
-                  asChild
-                  className="w-full border-slate-800 text-white hover:bg-slate-800"
+                <Link
+                  href={`/contact?subject=Question regarding ${encodeURIComponent(itinerary.title)}`}
+                  className={buttonVariants({
+                    variant: "outline",
+                    className: "w-full border-slate-800 text-white hover:bg-slate-800 flex items-center justify-center cursor-pointer font-medium"
+                  })}
                 >
-                  <Link href={`/contact?subject=Question regarding ${encodeURIComponent(itinerary.title)}`}>
-                    Inquire for Details
-                  </Link>
-                </Button>
+                  Inquire for Details
+                </Link>
               </div>
             </Card>
           </div>
@@ -271,13 +276,15 @@ export default function ItineraryDetailsPage({ params }: { params: Promise<{ id:
                   </CardContent>
                   <CardFooter className="p-3 border-t border-slate-800 flex items-center justify-between bg-slate-950/20 text-xs">
                     <span className="font-bold text-teal-400">${item.cost.toLocaleString()}</span>
-                    <Button
-                      asChild
-                      variant="link"
-                      className="h-auto p-0 text-teal-400 hover:text-teal-300 font-semibold"
+                    <Link
+                      href={`/itineraries/${item._id}`}
+                      className={buttonVariants({
+                        variant: "link",
+                        className: "h-auto p-0 text-teal-400 hover:text-teal-300 font-semibold cursor-pointer"
+                      })}
                     >
-                      <Link href={`/itineraries/${item._id}`}>Details</Link>
-                    </Button>
+                      Details
+                    </Link>
                   </CardFooter>
                 </Card>
               ))}

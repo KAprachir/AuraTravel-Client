@@ -8,7 +8,7 @@ import { authClient } from "@/lib/auth-client";
 import { apiFetch } from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -97,12 +97,15 @@ export default function ManageDashboardPage() {
             <h1 className="text-3xl font-extrabold text-white tracking-tight">Manage Itineraries</h1>
             <p className="text-slate-400 mt-1">Review, inspect, or delete travel itineraries you created</p>
           </div>
-          <Button asChild className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold shrink-0">
-            <Link href="/itineraries/add">
-              <Plus className="mr-1.5 h-4 w-4" />
-              New Itinerary
-            </Link>
-          </Button>
+          <Link
+            href="/itineraries/add"
+            className={buttonVariants({
+              className: "bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold shrink-0 cursor-pointer flex items-center justify-center"
+            })}
+          >
+            <Plus className="mr-1.5 h-4 w-4" />
+            New Itinerary
+          </Link>
         </div>
 
         {deleteError && (
@@ -128,9 +131,14 @@ export default function ManageDashboardPage() {
             <Plane className="mx-auto h-12 w-12 text-slate-600 mb-4 animate-bounce" />
             <p className="text-slate-300 font-semibold text-lg mb-1">No Itineraries Published Yet</p>
             <p className="text-slate-500 text-sm mb-6">Create your first itinerary to start tracking your travel plans.</p>
-            <Button asChild className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold">
-              <Link href="/itineraries/add">Create Itinerary</Link>
-            </Button>
+            <Link
+              href="/itineraries/add"
+              className={buttonVariants({
+                className: "bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold cursor-pointer inline-flex items-center justify-center"
+              })}
+            >
+              Create Itinerary
+            </Link>
           </div>
         ) : (
           <Card className="bg-slate-900 border-slate-800 overflow-hidden shadow-2xl">
@@ -178,17 +186,17 @@ export default function ManageDashboardPage() {
                     </TableCell>
                     <TableCell className="text-center">
                       <div className="flex items-center justify-center space-x-1.5">
-                        <Button
-                          asChild
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800"
+                        <Link
+                          href={`/itineraries/${itinerary._id}`}
+                          className={buttonVariants({
+                            variant: "ghost",
+                            size: "icon",
+                            className: "h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800 flex items-center justify-center cursor-pointer"
+                          })}
                           title="View Itinerary"
                         >
-                          <Link href={`/itineraries/${itinerary._id}`}>
-                            <Eye className="h-4 w-4" />
-                          </Link>
-                        </Button>
+                          <Eye className="h-4 w-4" />
+                        </Link>
                         <Button
                           variant="ghost"
                           size="icon"

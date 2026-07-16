@@ -375,8 +375,8 @@ export default function ExpenseDashboard() {
             {/* Expenses List */}
             {isLoading ? (
               <Card className="bg-slate-900 border-slate-800 p-6 space-y-3">
-                <Skeleton className="h-6 w-full bg-slate-800" />
-                <Skeleton className="h-6 w-full bg-slate-800" />
+                <div className="h-6 w-full bg-slate-850 rounded animate-pulse" />
+                <div className="h-6 w-full bg-slate-850 rounded animate-pulse" />
               </Card>
             ) : isError ? (
               <div className="text-center py-6 bg-slate-900 border border-slate-850 text-slate-500">
@@ -573,7 +573,7 @@ export default function ExpenseDashboard() {
               </Button>
             </DialogFooter>
           </form>
-        </Dialog>
+        </DialogContent>
       </Dialog>
 
       <Footer />

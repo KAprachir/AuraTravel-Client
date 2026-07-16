@@ -363,7 +363,7 @@ export default function AddItineraryPage() {
                 </Button>
               </div>
             </form>
-          </Card>
+          </CardContent>
         </Card>
       </main>
 
