@@ -68,7 +68,7 @@ export default function RegisterPage() {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/"
+        callbackURL: `${window.location.origin}/`
       }, {
         onError: (ctx) => {
           setError(ctx.error.message || "Failed to initialize Google authentication.");
