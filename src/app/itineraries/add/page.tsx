@@ -30,6 +30,15 @@ export default function AddItineraryPage() {
   const [cost, setCost] = useState("");
   const [category, setCategory] = useState("Adventure");
   const [dailyPlan, setDailyPlan] = useState<DailyActivityInput[]>([]);
+  const [isPublic, setIsPublic] = useState(false);
+
+  // Set default visibility based on user role when session changes
+  useEffect(() => {
+    if (session) {
+      const isPlannerOrAdmin = ["planner", "admin"].includes(session.user.role || "");
+      setIsPublic(isPlannerOrAdmin);
+    }
+  }, [session]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -132,7 +141,8 @@ export default function AddItineraryPage() {
           duration: Number(duration),
           cost: Number(cost),
           category,
-          dailyPlan: cleanedDailyPlan
+          dailyPlan: cleanedDailyPlan,
+          isPublic
         })
       });
       router.push("/itineraries/manage");
@@ -344,6 +354,22 @@ export default function AddItineraryPage() {
                 </div>
               </div>
 
+              {/* Public/Private Toggle for Planners and Admins */}
+              {["planner", "admin"].includes(session?.user?.role || "") && (
+                <div className="flex items-center space-x-2 bg-slate-950 p-3 rounded-lg border border-slate-850">
+                  <input
+                    type="checkbox"
+                    id="isPublic"
+                    checked={isPublic}
+                    onChange={(e) => setIsPublic(e.target.checked)}
+                    className="h-4 w-4 rounded border-slate-800 bg-slate-900 text-teal-600 focus:ring-teal-500 focus:ring-offset-slate-900 cursor-pointer"
+                  />
+                  <label htmlFor="isPublic" className="text-sm font-medium text-slate-200 cursor-pointer">
+                    Publish publicly (visible to everyone in the Explore directory)
+                  </label>
+                </div>
+              )}
+
               {/* Submit Buttons */}
               <div className="flex justify-end gap-3 pt-6 border-t border-slate-800">
                 <Button
@@ -359,7 +385,7 @@ export default function AddItineraryPage() {
                   disabled={loading}
                   className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold"
                 >
-                  {loading ? "Publishing..." : "Publish Itinerary"}
+                  {loading ? "Saving..." : (isPublic ? "Publish Itinerary" : "Save Private Itinerary")}
                 </Button>
               </div>
             </form>

@@ -30,6 +30,7 @@ interface ItineraryRow {
   cost: number;
   coverImage: string;
   createdAt: string;
+  isPublic?: boolean;
 }
 
 export default function ManageDashboardPage() {
@@ -148,6 +149,7 @@ export default function ManageDashboardPage() {
                   <TableHead className="text-slate-400 w-[80px] hidden md:table-cell">Cover</TableHead>
                   <TableHead className="text-slate-400">Title</TableHead>
                   <TableHead className="text-slate-400">Destination</TableHead>
+                  <TableHead className="text-slate-400 hidden sm:table-cell">Status</TableHead>
                   <TableHead className="text-slate-400 hidden sm:table-cell">Category</TableHead>
                   <TableHead className="text-slate-400 hidden sm:table-cell">Duration</TableHead>
                   <TableHead className="text-slate-400 text-right">Cost</TableHead>
@@ -172,6 +174,15 @@ export default function ManageDashboardPage() {
                     </TableCell>
                     <TableCell className="text-slate-300 max-w-[150px] truncate">
                       {itinerary.destination}
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
+                        itinerary.isPublic !== false
+                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                          : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                      }`}>
+                        {itinerary.isPublic !== false ? "Public" : "Private"}
+                      </span>
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <span className="bg-slate-800 text-teal-400 px-2 py-0.5 rounded text-xs font-semibold uppercase">

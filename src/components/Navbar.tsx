@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Menu, X, Plane, User, LogOut } from "lucide-react";
+import { Menu, X, Plane, User, LogOut, Shield } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -30,7 +30,7 @@ export default function Navbar() {
     });
   };
 
-  const navLinks = session
+  let navLinks = session
     ? [
         { name: "Home", href: "/" },
         { name: "Explore", href: "/itineraries" },
@@ -43,6 +43,10 @@ export default function Navbar() {
         { name: "Explore", href: "/itineraries" },
         { name: "About", href: "/about" }
       ];
+
+  if (session && session.user.role === "admin") {
+    navLinks = [...navLinks, { name: "Admin Dashboard", href: "/admin" }];
+  }
 
   const activeClass = (path: string) =>
     pathname === path
@@ -90,6 +94,17 @@ export default function Navbar() {
                 align="end"
                 className="w-48 bg-slate-900 border-slate-800 text-slate-200"
               >
+                {session.user.role === "admin" && (
+                  <DropdownMenuItem className="p-0">
+                    <Link
+                      href="/admin"
+                      className="flex items-center w-full px-4 py-2 hover:bg-slate-800 cursor-pointer text-slate-200 hover:text-white text-xs font-medium"
+                    >
+                      <Shield className="mr-2 h-4 w-4 text-teal-400" />
+                      <span>Admin Panel</span>
+                    </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem className="p-0">
                   <Link
                     href="/itineraries/manage"
