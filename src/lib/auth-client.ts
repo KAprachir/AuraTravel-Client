@@ -10,6 +10,31 @@ export const authClient = createAuthClient({
           type: "string",
           required: false,
           defaultValue: "traveler"
+        },
+        isOnboarded: {
+          type: "boolean",
+          required: false,
+          defaultValue: false
+        },
+        travelStyle: {
+          type: "string",
+          required: false
+        },
+        homeLocation: {
+          type: "string",
+          required: false
+        },
+        bio: {
+          type: "string",
+          required: false
+        },
+        yearsOfExperience: {
+          type: "number",
+          required: false
+        },
+        portfolioUrl: {
+          type: "string",
+          required: false
         }
       }
     })

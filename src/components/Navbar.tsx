@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -18,6 +18,15 @@ export default function Navbar() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session, isPending } = authClient.useSession();
+
+  // Redirect users to onboarding if not finished
+  useEffect(() => {
+    if (!isPending && session) {
+      if (!session.user.isOnboarded && pathname !== "/onboarding") {
+        router.push("/onboarding");
+      }
+    }
+  }, [session, isPending, pathname, router]);
 
   const handleSignOut = async () => {
     await authClient.signOut({
