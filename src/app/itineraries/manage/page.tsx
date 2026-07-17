@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table";
-import { AlertCircle, Eye, Trash2, Calendar, Plane, Plus } from "lucide-react";
+import { AlertCircle, Eye, Trash2, Calendar, Plane, Plus, MapPin } from "lucide-react";
 
 interface ItineraryRow {
   _id: string;
@@ -33,11 +33,23 @@ interface ItineraryRow {
   isPublic?: boolean;
 }
 
+interface BookingRow {
+  _id: string;
+  itineraryId: ItineraryRow | null;
+  price: number;
+  numberOfTravelers: number;
+  totalPrice: number;
+  startDate: string;
+  status: string;
+  createdAt: string;
+}
+
 export default function ManageDashboardPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: session, isPending } = authClient.useSession();
   const [deleteError, setDeleteError] = useState("");
+  const [activeTab, setActiveTab] = useState<"booked" | "created">("booked");
 
   // Redirect to login if not authenticated
   useEffect(() => {
@@ -46,16 +58,30 @@ export default function ManageDashboardPage() {
     }
   }, [session, isPending, router]);
 
-  // Fetch only my itineraries
+  // Fetch only my itineraries (created)
   const {
     data: itineraries,
-    isLoading,
-    isError
+    isLoading: isCreatedLoading,
+    isError: isCreatedError
   } = useQuery<ItineraryRow[]>({
     queryKey: ["my-itineraries"],
     queryFn: () => apiFetch("/api/itineraries/my"),
     enabled: !!session
   });
+
+  // Fetch only my bookings (purchased)
+  const {
+    data: bookings,
+    isLoading: isBookingsLoading,
+    isError: isBookingsError
+  } = useQuery<BookingRow[]>({
+    queryKey: ["my-bookings"],
+    queryFn: () => apiFetch("/api/bookings/my"),
+    enabled: !!session
+  });
+
+  const isLoading = activeTab === "booked" ? isBookingsLoading : isCreatedLoading;
+  const isError = activeTab === "booked" ? isBookingsError : isCreatedError;
 
   // Delete mutation
   const deleteMutation = useMutation({
@@ -95,8 +121,8 @@ export default function ManageDashboardPage() {
       <main className="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">Manage Itineraries</h1>
-            <p className="text-slate-400 mt-1">Review, inspect, or delete travel itineraries you created</p>
+            <h1 className="text-3xl font-extrabold text-white tracking-tight">Traveler Dashboard</h1>
+            <p className="text-slate-400 mt-1">Manage your booked travel itineraries and custom schedules</p>
           </div>
           <Link
             href="/itineraries/add"
@@ -116,6 +142,30 @@ export default function ManageDashboardPage() {
           </div>
         )}
 
+        {/* Custom Tabs */}
+        <div className="flex border-b border-slate-800 mb-6">
+          <button
+            onClick={() => setActiveTab("booked")}
+            className={`px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
+              activeTab === "booked"
+                ? "text-teal-400 border-b-2 border-teal-400 font-bold"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            My Booked Trips
+          </button>
+          <button
+            onClick={() => setActiveTab("created")}
+            className={`px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
+              activeTab === "created"
+                ? "text-teal-400 border-b-2 border-teal-400 font-bold"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            My Custom Itineraries
+          </button>
+        </div>
+
         {isLoading ? (
           <Card className="bg-slate-900 border-slate-800 p-6 space-y-3">
             <Skeleton className="h-8 w-full bg-slate-850" />
@@ -127,104 +177,194 @@ export default function ManageDashboardPage() {
             <p className="text-rose-400 font-semibold mb-2">Error Loading Dashboard</p>
             <p className="text-slate-500 text-sm">Failed to connect to the backend server.</p>
           </div>
-        ) : itineraries?.length === 0 ? (
-          <div className="text-center py-16 bg-slate-900/40 rounded-xl border border-slate-800">
-            <Plane className="mx-auto h-12 w-12 text-slate-600 mb-4 animate-bounce" />
-            <p className="text-slate-300 font-semibold text-lg mb-1">No Itineraries Published Yet</p>
-            <p className="text-slate-500 text-sm mb-6">Create your first itinerary to start tracking your travel plans.</p>
-            <Link
-              href="/itineraries/add"
-              className={buttonVariants({
-                className: "bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold cursor-pointer inline-flex items-center justify-center"
-              })}
-            >
-              Create Itinerary
-            </Link>
-          </div>
-        ) : (
-          <Card className="bg-slate-900 border-slate-800 overflow-hidden shadow-2xl">
-            <Table>
-              <TableHeader className="bg-slate-950">
-                <TableRow className="border-slate-800 hover:bg-slate-950">
-                  <TableHead className="text-slate-400 w-[80px] hidden md:table-cell">Cover</TableHead>
-                  <TableHead className="text-slate-400">Title</TableHead>
-                  <TableHead className="text-slate-400">Destination</TableHead>
-                  <TableHead className="text-slate-400 hidden sm:table-cell">Status</TableHead>
-                  <TableHead className="text-slate-400 hidden sm:table-cell">Category</TableHead>
-                  <TableHead className="text-slate-400 hidden sm:table-cell">Duration</TableHead>
-                  <TableHead className="text-slate-400 text-right">Cost</TableHead>
-                  <TableHead className="text-slate-400 text-center w-[120px]">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {itineraries?.map((itinerary) => (
-                  <TableRow key={itinerary._id} className="border-slate-850 hover:bg-slate-850/30">
-                    <TableCell className="hidden md:table-cell">
-                      <div className="h-10 w-12 rounded overflow-hidden relative bg-slate-950">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={itinerary.coverImage}
-                          alt=""
-                          className="object-cover w-full h-full"
-                        />
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-semibold text-white max-w-[200px] truncate">
-                      {itinerary.title}
-                    </TableCell>
-                    <TableCell className="text-slate-300 max-w-[150px] truncate">
-                      {itinerary.destination}
-                    </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
-                        itinerary.isPublic !== false
-                          ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                          : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                      }`}>
-                        {itinerary.isPublic !== false ? "Public" : "Private"}
-                      </span>
-                    </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      <span className="bg-slate-800 text-teal-400 px-2 py-0.5 rounded text-xs font-semibold uppercase">
-                        {itinerary.category}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-slate-300 hidden sm:table-cell">
-                      {itinerary.duration} Days
-                    </TableCell>
-                    <TableCell className="text-right font-extrabold text-teal-400">
-                      ${itinerary.cost.toLocaleString()}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <div className="flex items-center justify-center space-x-1.5">
-                        <Link
-                          href={`/itineraries/${itinerary._id}`}
-                          className={buttonVariants({
-                            variant: "ghost",
-                            size: "icon",
-                            className: "h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800 flex items-center justify-center cursor-pointer"
-                          })}
-                          title="View Itinerary"
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Link>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleDelete(itinerary._id)}
-                          disabled={deleteMutation.isPending}
-                          className="h-8 w-8 text-slate-500 hover:text-rose-400 hover:bg-slate-800"
-                          title="Delete Itinerary"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
+        ) : activeTab === "booked" ? (
+          /* BOOKED TRIPS VIEW */
+          bookings?.length === 0 ? (
+            <div className="text-center py-16 bg-slate-900/40 rounded-xl border border-slate-800">
+              <Plane className="mx-auto h-12 w-12 text-slate-600 mb-4 animate-bounce" />
+              <p className="text-slate-300 font-semibold text-lg mb-1">No Booked Trips Yet</p>
+              <p className="text-slate-500 text-sm mb-6">Explore public itineraries and book your next journey.</p>
+              <Link
+                href="/itineraries"
+                className={buttonVariants({
+                  className: "bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold cursor-pointer inline-flex items-center justify-center"
+                })}
+              >
+                Browse Itineraries
+              </Link>
+            </div>
+          ) : (
+            <Card className="bg-slate-900 border-slate-800 overflow-hidden shadow-2xl">
+              <Table>
+                <TableHeader className="bg-slate-950">
+                  <TableRow className="border-slate-800 hover:bg-slate-950">
+                    <TableHead className="text-slate-400 w-[80px] hidden md:table-cell">Cover</TableHead>
+                    <TableHead className="text-slate-400">Itinerary</TableHead>
+                    <TableHead className="text-slate-400">Start Date</TableHead>
+                    <TableHead className="text-slate-400 hidden sm:table-cell">Travelers</TableHead>
+                    <TableHead className="text-slate-400 text-right">Total Price</TableHead>
+                    <TableHead className="text-slate-400 text-center w-[100px]">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
+                </TableHeader>
+                <TableBody>
+                  {bookings?.map((booking) => (
+                    <TableRow key={booking._id} className="border-slate-850 hover:bg-slate-850/30">
+                      <TableCell className="hidden md:table-cell">
+                        <div className="h-10 w-12 rounded overflow-hidden relative bg-slate-950">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={booking.itineraryId?.coverImage || "https://images.unsplash.com/photo-1488646953014-85cb44e25828"}
+                            alt=""
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-semibold text-white max-w-[200px] truncate">
+                        <div>
+                          <span className="block truncate">{booking.itineraryId?.title || "Deleted Itinerary"}</span>
+                          <span className="text-[10px] text-slate-500 flex items-center mt-0.5 font-normal">
+                            <MapPin className="mr-1 h-3 w-3 text-teal-400 shrink-0" />
+                            <span className="truncate">{booking.itineraryId?.destination || "Unknown"}</span>
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-slate-300">
+                        {new Date(booking.startDate).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric"
+                        })}
+                      </TableCell>
+                      <TableCell className="text-slate-300 hidden sm:table-cell">
+                        {booking.numberOfTravelers} Guests
+                      </TableCell>
+                      <TableCell className="text-right font-extrabold text-teal-400">
+                        ${booking.totalPrice.toLocaleString()}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {booking.itineraryId ? (
+                          <Link
+                            href={`/itineraries/${booking.itineraryId._id}`}
+                            className={buttonVariants({
+                              variant: "ghost",
+                              size: "icon",
+                              className: "h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800 flex items-center justify-center cursor-pointer"
+                            })}
+                            title="View Itinerary Schedule"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Link>
+                        ) : (
+                          <span className="text-xs text-slate-600">Unavailable</span>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Card>
+          )
+        ) : (
+          /* CREATED ITINERARIES VIEW */
+          itineraries?.length === 0 ? (
+            <div className="text-center py-16 bg-slate-900/40 rounded-xl border border-slate-800">
+              <Plane className="mx-auto h-12 w-12 text-slate-600 mb-4 animate-bounce" />
+              <p className="text-slate-300 font-semibold text-lg mb-1">No Custom Itineraries Created</p>
+              <p className="text-slate-500 text-sm mb-6">Design custom travel packages and share them with the world.</p>
+              <Link
+                href="/itineraries/add"
+                className={buttonVariants({
+                  className: "bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold cursor-pointer inline-flex items-center justify-center"
+                })}
+              >
+                Create Itinerary
+              </Link>
+            </div>
+          ) : (
+            <Card className="bg-slate-900 border-slate-800 overflow-hidden shadow-2xl">
+              <Table>
+                <TableHeader className="bg-slate-950">
+                  <TableRow className="border-slate-800 hover:bg-slate-950">
+                    <TableHead className="text-slate-400 w-[80px] hidden md:table-cell">Cover</TableHead>
+                    <TableHead className="text-slate-400">Title</TableHead>
+                    <TableHead className="text-slate-400">Destination</TableHead>
+                    <TableHead className="text-slate-400 hidden sm:table-cell">Status</TableHead>
+                    <TableHead className="text-slate-400 hidden sm:table-cell">Category</TableHead>
+                    <TableHead className="text-slate-400 hidden sm:table-cell">Duration</TableHead>
+                    <TableHead className="text-slate-400 text-right">Cost</TableHead>
+                    <TableHead className="text-slate-400 text-center w-[120px]">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {itineraries?.map((itinerary) => (
+                    <TableRow key={itinerary._id} className="border-slate-850 hover:bg-slate-850/30">
+                      <TableCell className="hidden md:table-cell">
+                        <div className="h-10 w-12 rounded overflow-hidden relative bg-slate-950">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={itinerary.coverImage}
+                            alt=""
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-semibold text-white max-w-[200px] truncate">
+                        {itinerary.title}
+                      </TableCell>
+                      <TableCell className="text-slate-300 max-w-[150px] truncate">
+                        {itinerary.destination}
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
+                          itinerary.isPublic !== false
+                            ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                            : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                        }`}>
+                          {itinerary.isPublic !== false ? "Public" : "Private"}
+                        </span>
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <span className="bg-slate-800 text-teal-400 px-2 py-0.5 rounded text-xs font-semibold uppercase">
+                          {itinerary.category}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-slate-300 hidden sm:table-cell">
+                        {itinerary.duration} Days
+                      </TableCell>
+                      <TableCell className="text-right font-extrabold text-teal-400">
+                        ${itinerary.cost.toLocaleString()}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="flex items-center justify-center space-x-1.5">
+                          <Link
+                            href={`/itineraries/${itinerary._id}`}
+                            className={buttonVariants({
+                              variant: "ghost",
+                              size: "icon",
+                              className: "h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800 flex items-center justify-center cursor-pointer"
+                            })}
+                            title="View Itinerary"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Link>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleDelete(itinerary._id)}
+                            disabled={deleteMutation.isPending}
+                            className="h-8 w-8 text-slate-500 hover:text-rose-400 hover:bg-slate-800"
+                            title="Delete Itinerary"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Card>
+          )
         )}
       </main>
 

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Menu, X, Plane, User, LogOut, Shield } from "lucide-react";
+import { Menu, X, Plane, User, LogOut, Shield, ShoppingBag } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -43,6 +43,10 @@ export default function Navbar() {
         { name: "Explore", href: "/itineraries" },
         { name: "About", href: "/about" }
       ];
+
+  if (session && ["planner", "admin"].includes(session.user.role || "")) {
+    navLinks = [...navLinks, { name: "Seller Dashboard", href: "/planner" }];
+  }
 
   if (session && session.user.role === "admin") {
     navLinks = [...navLinks, { name: "Admin Dashboard", href: "/admin" }];
@@ -102,6 +106,17 @@ export default function Navbar() {
                     >
                       <Shield className="mr-2 h-4 w-4 text-teal-400" />
                       <span>Admin Panel</span>
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                {["planner", "admin"].includes(session.user.role || "") && (
+                  <DropdownMenuItem className="p-0">
+                    <Link
+                      href="/planner"
+                      className="flex items-center w-full px-4 py-2 hover:bg-slate-800 cursor-pointer text-slate-200 hover:text-white text-xs font-medium"
+                    >
+                      <ShoppingBag className="mr-2 h-4 w-4 text-teal-400" />
+                      <span>Seller Portal</span>
                     </Link>
                   </DropdownMenuItem>
                 )}
