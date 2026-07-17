@@ -126,7 +126,7 @@ export default function LandingPage() {
                   className={buttonVariants({
                     variant: "outline",
                     size: "lg",
-                    className: "border-slate-800 text-white hover:bg-slate-900 px-8 flex items-center justify-center cursor-pointer"
+                    className: "border border-slate-600 bg-slate-800/80 text-white hover:bg-slate-700 hover:text-white hover:border-slate-500 px-8 flex items-center justify-center cursor-pointer transition-all duration-200"
                   })}
                 >
                   Go to Dashboard
@@ -137,7 +137,7 @@ export default function LandingPage() {
                   className={buttonVariants({
                     variant: "outline",
                     size: "lg",
-                    className: "border-slate-800 text-white hover:bg-slate-900 px-8 flex items-center justify-center cursor-pointer"
+                    className: "border border-slate-600 bg-slate-800/80 text-white hover:bg-slate-700 hover:text-white hover:border-slate-500 px-8 flex items-center justify-center cursor-pointer transition-all duration-200"
                   })}
                 >
                   Create Account

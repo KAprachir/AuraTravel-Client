@@ -93,9 +93,9 @@ export default function RegisterPage() {
       </Link>
 
       <Card className="w-full max-w-md bg-slate-900/80 border-slate-800 backdrop-blur-md text-white z-10 shadow-2xl">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center">Create an Account</CardTitle>
-          <CardDescription className="text-slate-400 text-center">
+        <CardHeader className="space-y-2 pb-2">
+          <CardTitle className="text-2xl text-center font-bold tracking-tight" style={{fontFamily: 'var(--font-jakarta)'}}>Create an Account</CardTitle>
+          <CardDescription className="text-slate-400 text-center text-sm">
             Sign up to start planning your smart itineraries
           </CardDescription>
         </CardHeader>
@@ -167,7 +167,7 @@ export default function RegisterPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold py-2 mt-2 transition-all duration-300"
+              className="w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-2.5 mt-2 transition-all duration-300 shadow-lg shadow-teal-500/20 hover:shadow-teal-400/30 rounded-xl text-sm tracking-wide"
             >
               {loading ? "Creating Account..." : "Create Account"}
             </Button>
@@ -186,7 +186,7 @@ export default function RegisterPage() {
             type="button"
             variant="outline"
             onClick={handleGoogleLogin}
-            className="w-full border-slate-800 hover:bg-slate-800 text-white hover:text-white"
+            className="w-full border border-slate-600 bg-slate-800 hover:bg-slate-700 text-white hover:text-white rounded-xl transition-all duration-200 font-medium text-sm"
           >
             <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
               <path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
@@ -194,7 +194,7 @@ export default function RegisterPage() {
             Sign up with Google
           </Button>
         </CardContent>
-        <CardFooter className="flex justify-center border-t border-slate-800/50 py-4">
+        <CardFooter className="flex justify-center border-t border-slate-800/50 py-4 bg-transparent">
           <p className="text-sm text-slate-500">
             Already have an account?{" "}
             <Link href="/login" className="text-teal-400 hover:underline">
