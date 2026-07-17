@@ -43,10 +43,14 @@ export default function AddItineraryPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Redirect to login if not authenticated
+  // Redirect to login if not authenticated, or to dashboard if traveler
   useEffect(() => {
-    if (!isPending && !session) {
-      router.push("/login");
+    if (!isPending) {
+      if (!session) {
+        router.push("/login");
+      } else if (!["planner", "admin"].includes(session.user.role || "")) {
+        router.push("/itineraries/manage");
+      }
     }
   }, [session, isPending, router]);
 

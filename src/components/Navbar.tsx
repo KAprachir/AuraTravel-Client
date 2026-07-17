@@ -34,7 +34,6 @@ export default function Navbar() {
     ? [
         { name: "Home", href: "/" },
         { name: "Explore", href: "/itineraries" },
-        { name: "Add Itinerary", href: "/itineraries/add" },
         { name: "Manage Dashboard", href: "/itineraries/manage" },
         { name: "Expense Tracker", href: "/expenses" }
       ]
@@ -45,7 +44,12 @@ export default function Navbar() {
       ];
 
   if (session && ["planner", "admin"].includes(session.user.role || "")) {
-    navLinks = [...navLinks, { name: "Seller Dashboard", href: "/planner" }];
+    navLinks = [
+      ...navLinks.slice(0, 2),
+      { name: "Add Itinerary", href: "/itineraries/add" },
+      { name: "Seller Dashboard", href: "/planner" },
+      ...navLinks.slice(2)
+    ];
   }
 
   if (session && session.user.role === "admin") {
