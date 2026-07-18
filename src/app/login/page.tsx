@@ -78,44 +78,21 @@ export default function LoginPage() {
     }, 600);
   };
 
-  const handleSimulatedGoogleLogin = async (googleUser: { name: string; email: string }) => {
-    setGoogleModalOpen(false);
+  const handleGoogleLogin = async () => {
     setLoading(true);
     setError("");
-
     try {
-      // For simulated Google OAuth, we programmatically register/login using Better Auth credentials API.
-      // We check if the email exists, otherwise we create a new user.
-      await authClient.signUp.email({
-        email: googleUser.email,
-        password: "GoogleSimulatedPassword999!",
-        name: googleUser.name,
-        callbackURL: "/"
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: `${window.location.origin}/`
       }, {
-        onError: async (ctx) => {
-          // If user already exists (signUp fails), we just sign them in.
-          await authClient.signIn.email({
-            email: googleUser.email,
-            password: "GoogleSimulatedPassword999!",
-            callbackURL: "/"
-          }, {
-            onError: (signInCtx) => {
-              setError(signInCtx.error.message || "Failed simulated Google authentication.");
-              setLoading(false);
-            },
-            onSuccess: () => {
-              router.push("/");
-              router.refresh();
-            }
-          });
-        },
-        onSuccess: () => {
-          router.push("/");
-          router.refresh();
+        onError: (ctx) => {
+          setError(ctx.error.message || "Failed to initialize Google authentication.");
+          setLoading(false);
         }
       });
     } catch (err) {
-      setError("Failed simulated Google authentication.");
+      setError("Failed to initialize Google authentication.");
       setLoading(false);
     }
   };
@@ -132,9 +109,9 @@ export default function LoginPage() {
       </Link>
 
       <Card className="w-full max-w-md bg-slate-900/80 border-slate-800 backdrop-blur-md text-white z-10 shadow-2xl">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
-          <CardDescription className="text-slate-400 text-center">
+        <CardHeader className="space-y-2 pb-2">
+          <CardTitle className="text-2xl text-center font-bold tracking-tight" style={{fontFamily: 'var(--font-jakarta)'}}>Welcome Back</CardTitle>
+          <CardDescription className="text-slate-400 text-center text-sm">
             Sign in to access your travel dashboard
           </CardDescription>
         </CardHeader>
@@ -178,7 +155,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold py-2 mt-2 transition-all duration-300"
+              className="w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-2.5 mt-2 transition-all duration-300 shadow-lg shadow-teal-500/20 hover:shadow-teal-400/30 rounded-xl text-sm tracking-wide"
             >
               {loading ? "Signing in..." : "Sign In with Email"}
             </Button>
@@ -197,8 +174,8 @@ export default function LoginPage() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => setGoogleModalOpen(true)}
-              className="border-slate-800 hover:bg-slate-800 text-white hover:text-white"
+              onClick={handleGoogleLogin}
+              className="border border-slate-600 bg-slate-800 hover:bg-slate-700 text-white hover:text-white rounded-xl transition-all duration-200 font-medium text-sm"
             >
               <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
                 <path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
@@ -209,13 +186,13 @@ export default function LoginPage() {
               type="button"
               onClick={handleDemoLogin}
               variant="outline"
-              className="border-slate-800 hover:bg-slate-800 text-amber-400 hover:text-amber-300 font-semibold"
+              className="border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 font-semibold rounded-xl transition-all duration-200 text-sm"
             >
               Demo Traveler
             </Button>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-center border-t border-slate-800/50 py-4">
+        <CardFooter className="flex justify-center border-t border-slate-800/50 py-4 bg-transparent">
           <p className="text-sm text-slate-500">
             Don&apos;t have an account?{" "}
             <Link href="/register" className="text-teal-400 hover:underline">
@@ -224,45 +201,6 @@ export default function LoginPage() {
           </p>
         </CardFooter>
       </Card>
-
-      {/* Google Simulation Popup Modal */}
-      <Dialog open={googleModalOpen} onOpenChange={setGoogleModalOpen}>
-        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-sm">
-          <DialogHeader>
-            <DialogTitle className="text-center text-xl flex items-center justify-center space-x-2">
-              <svg className="h-5 w-5 text-teal-400" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
-                <path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
-              </svg>
-              <span>Sign in with Google</span>
-            </DialogTitle>
-            <DialogDescription className="text-slate-400 text-center">
-              Choose an account to continue to AuraTravel
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-3 pt-2">
-            {[
-              { name: "Prachir K", email: "prachir.traveler@gmail.com" },
-              { name: "Sarah Connor", email: "sarah.connor@roadtrips.net" },
-              { name: "Alex Mercer", email: "alex.mercer@adventures.org" }
-            ].map((user) => (
-              <button
-                key={user.email}
-                onClick={() => handleSimulatedGoogleLogin(user)}
-                className="w-full flex items-center space-x-3 p-3 bg-slate-950 hover:bg-slate-800 rounded-lg border border-slate-800 hover:border-slate-700 transition-all text-left group"
-              >
-                <div className="h-8 w-8 bg-teal-500 rounded-full flex items-center justify-center font-bold text-slate-950 uppercase shrink-0">
-                  {user.name.charAt(0)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-sm font-semibold text-white truncate">{user.name}</div>
-                  <div className="text-xs text-slate-500 truncate">{user.email}</div>
-                </div>
-                <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-teal-400 transition-colors" />
-              </button>
-            ))}
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

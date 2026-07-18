@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Menu, X, Plane, User, LogOut } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, X, Plane, User, LogOut, Shield, ShoppingBag } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +19,15 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { data: session, isPending } = authClient.useSession();
 
+  // Redirect users to onboarding if not finished
+  useEffect(() => {
+    if (!isPending && session) {
+      if (!session.user.isOnboarded && pathname !== "/onboarding") {
+        router.push("/onboarding");
+      }
+    }
+  }, [session, isPending, pathname, router]);
+
   const handleSignOut = async () => {
     await authClient.signOut({
       fetchOptions: {
@@ -30,11 +39,10 @@ export default function Navbar() {
     });
   };
 
-  const navLinks = session
+  let navLinks = session
     ? [
         { name: "Home", href: "/" },
         { name: "Explore", href: "/itineraries" },
-        { name: "Add Itinerary", href: "/itineraries/add" },
         { name: "Manage Dashboard", href: "/itineraries/manage" },
         { name: "Expense Tracker", href: "/expenses" }
       ]
@@ -43,6 +51,19 @@ export default function Navbar() {
         { name: "Explore", href: "/itineraries" },
         { name: "About", href: "/about" }
       ];
+
+  if (session && ["planner", "admin"].includes(session.user.role || "")) {
+    navLinks = [
+      ...navLinks.slice(0, 2),
+      { name: "Add Itinerary", href: "/itineraries/add" },
+      { name: "Seller Dashboard", href: "/planner" },
+      ...navLinks.slice(2)
+    ];
+  }
+
+  if (session && session.user.role === "admin") {
+    navLinks = [...navLinks, { name: "Admin Dashboard", href: "/admin" }];
+  }
 
   const activeClass = (path: string) =>
     pathname === path
@@ -80,22 +101,42 @@ export default function Navbar() {
             <div className="h-9 w-20 bg-slate-800 rounded animate-pulse" />
           ) : session ? (
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center space-x-2 text-slate-300 hover:text-white focus:outline-none bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 hover:border-slate-600 transition-colors">
-                  <div className="h-6 w-6 bg-teal-500 rounded-full flex items-center justify-center text-xs font-bold text-slate-950 uppercase">
-                    {session.user.name.charAt(0)}
-                  </div>
-                  <span className="text-sm font-medium">{session.user.name}</span>
-                </button>
+              <DropdownMenuTrigger className="flex items-center space-x-2 text-slate-300 hover:text-white focus:outline-none bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700 hover:border-slate-600 transition-colors cursor-pointer">
+                <div className="h-6 w-6 bg-teal-500 rounded-full flex items-center justify-center text-xs font-bold text-slate-950 uppercase">
+                  {session.user.name.charAt(0)}
+                </div>
+                <span className="text-sm font-medium">{session.user.name}</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
                 className="w-48 bg-slate-900 border-slate-800 text-slate-200"
               >
-                <DropdownMenuItem asChild>
+                {session.user.role === "admin" && (
+                  <DropdownMenuItem className="p-0">
+                    <Link
+                      href="/admin"
+                      className="flex items-center w-full px-4 py-2 hover:bg-slate-800 cursor-pointer text-slate-200 hover:text-white text-xs font-medium"
+                    >
+                      <Shield className="mr-2 h-4 w-4 text-teal-400" />
+                      <span>Admin Panel</span>
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                {["planner", "admin"].includes(session.user.role || "") && (
+                  <DropdownMenuItem className="p-0">
+                    <Link
+                      href="/planner"
+                      className="flex items-center w-full px-4 py-2 hover:bg-slate-800 cursor-pointer text-slate-200 hover:text-white text-xs font-medium"
+                    >
+                      <ShoppingBag className="mr-2 h-4 w-4 text-teal-400" />
+                      <span>Seller Portal</span>
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuItem className="p-0">
                   <Link
                     href="/itineraries/manage"
-                    className="flex items-center px-4 py-2 hover:bg-slate-800 cursor-pointer"
+                    className="flex items-center w-full px-4 py-2 hover:bg-slate-800 cursor-pointer text-slate-200 hover:text-white text-xs font-medium"
                   >
                     <User className="mr-2 h-4 w-4 text-teal-400" />
                     <span>Dashboard</span>
@@ -103,7 +144,7 @@ export default function Navbar() {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={handleSignOut}
-                  className="flex items-center px-4 py-2 hover:bg-slate-800 text-rose-400 hover:text-rose-300 cursor-pointer focus:text-rose-300"
+                  className="flex items-center px-4 py-2 hover:bg-slate-850 text-rose-400 hover:text-rose-350 cursor-pointer text-xs font-medium focus:outline-none"
                 >
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Sign Out</span>
@@ -112,16 +153,23 @@ export default function Navbar() {
             </DropdownMenu>
           ) : (
             <div className="flex items-center space-x-3">
-              <Button
-                variant="ghost"
-                asChild
-                className="text-slate-300 hover:text-white hover:bg-slate-800 font-medium"
+              <Link
+                href="/login"
+                className={buttonVariants({
+                  variant: "ghost",
+                  className: "text-slate-300 hover:text-white hover:bg-slate-800 font-medium cursor-pointer"
+                })}
               >
-                <Link href="/login">Login</Link>
-              </Button>
-              <Button asChild className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold">
-                <Link href="/register">Sign Up</Link>
-              </Button>
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className={buttonVariants({
+                  className: "bg-teal-500 hover:bg-teal-600 text-slate-950 hover:text-slate-950 font-bold cursor-pointer"
+                })}
+              >
+                Sign Up
+              </Link>
             </div>
           )}
         </div>
@@ -176,25 +224,25 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex flex-col space-y-2">
-                <Button
-                  variant="outline"
-                  asChild
+                <Link
+                  href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                  className={buttonVariants({
+                    variant: "outline",
+                    className: "w-full text-center border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white cursor-pointer"
+                  })}
                 >
-                  <Link href="/login" className="w-full text-center">
-                    Login
-                  </Link>
-                </Button>
-                <Button
-                  asChild
+                  Login
+                </Link>
+                <Link
+                  href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold"
+                  className={buttonVariants({
+                    className: "w-full text-center bg-teal-500 hover:bg-teal-600 text-slate-950 hover:text-slate-950 font-bold cursor-pointer"
+                  })}
                 >
-                  <Link href="/register" className="w-full text-center">
-                    Sign Up
-                  </Link>
-                </Button>
+                  Sign Up
+                </Link>
               </div>
             )}
           </div>

@@ -1,0 +1,34 @@
+name: Next.js CI
+
+on:
+  push:
+    branches: [ main, setup-and-auth, itinerary-core, expense-tracker, ai-chat, additional-pages, ci-workflow ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: TypeScript Validation
+      run: npx tsc --noEmit
+
+    - name: Build Next.js Application
+      run: npm run build
+      env:
+        NEXT_PUBLIC_API_URL: http://localhost:5000
+        # Mock values to satisfy build-time environment verification
+        BETTER_AUTH_URL: http://localhost:3000
