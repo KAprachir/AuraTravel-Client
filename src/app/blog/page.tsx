@@ -40,14 +40,14 @@ export default function BlogPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
       <Navbar />
 
       <main className="flex-grow max-w-6xl mx-auto px-4 py-12 w-full">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <h1 className="text-4xl font-extrabold text-white tracking-tight">Travel Blog</h1>
-          <p className="text-slate-400">
+          <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Travel Blog</h1>
+          <p className="text-slate-600 dark:text-slate-400">
             Stories, technical guides, and budgeting hacks from our global traveler community.
           </p>
         </div>
@@ -57,10 +57,10 @@ export default function BlogPage() {
           {blogs.map((blog) => (
             <Card
               key={blog.id}
-              className="bg-slate-900 border-slate-800 overflow-hidden flex flex-col justify-between hover:border-slate-700 transition-all duration-300 group"
+              className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 group shadow-md"
             >
               {/* Image */}
-              <div className="relative h-48 overflow-hidden shrink-0">
+              <div className="relative h-48 overflow-hidden shrink-0 bg-slate-100 dark:bg-slate-950">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={blog.image}
@@ -77,33 +77,33 @@ export default function BlogPage() {
               <CardContent className="p-5 flex-grow space-y-3">
                 <div className="flex items-center space-x-3 text-[10px] text-slate-500">
                   <span className="flex items-center">
-                    <Calendar className="mr-1 h-3 w-3 text-teal-400" />
+                    <Calendar className="mr-1 h-3 w-3 text-teal-600 dark:text-teal-400" />
                     {blog.date}
                   </span>
                   <span className="flex items-center">
-                    <Clock className="mr-1 h-3 w-3 text-teal-400" />
+                    <Clock className="mr-1 h-3 w-3 text-teal-600 dark:text-teal-400" />
                     {blog.readTime}
                   </span>
                 </div>
-                <h3 className="font-bold text-white text-base group-hover:text-teal-400 transition-colors line-clamp-2">
+                <h3 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors line-clamp-2">
                   {blog.title}
                 </h3>
-                <p className="text-slate-400 text-xs line-clamp-3 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-400 text-xs line-clamp-3 leading-relaxed">
                   {blog.excerpt}
                 </p>
               </CardContent>
 
               {/* Author & Action */}
-              <CardFooter className="p-5 border-t border-slate-800/60 flex items-center justify-between">
+              <CardFooter className="p-5 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between bg-slate-50/50 dark:bg-slate-950/20">
                 <div className="flex items-center space-x-2">
-                  <div className="h-6 w-6 bg-slate-800 text-teal-400 rounded-full flex items-center justify-center font-bold text-xs shrink-0">
+                  <div className="h-6 w-6 bg-slate-100 dark:bg-slate-800 text-teal-600 dark:text-teal-400 rounded-full flex items-center justify-center font-bold text-xs shrink-0">
                     <User className="h-3 w-3" />
                   </div>
-                  <span className="text-[10px] font-semibold text-slate-400">{blog.author}</span>
+                  <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-400">{blog.author}</span>
                 </div>
                 <Button
                   variant="link"
-                  className="h-auto p-0 text-teal-400 hover:text-teal-300 font-bold text-xs flex items-center group-hover:translate-x-0.5 transition-transform"
+                  className="h-auto p-0 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-bold text-xs flex items-center group-hover:translate-x-0.5 transition-transform cursor-pointer"
                 >
                   Read Article
                   <ArrowRight className="ml-1 h-3.5 w-3.5" />

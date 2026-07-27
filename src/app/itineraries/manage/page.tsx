@@ -131,21 +131,21 @@ export default function ManageDashboardPage() {
 
   if (isPending || !session) {
     return (
-      <div className="min-h-screen bg-slate-950 flex justify-center items-center text-white">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex justify-center items-center text-slate-900 dark:text-white">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
       <Navbar />
 
       <main className="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">Traveler Dashboard</h1>
-            <p className="text-slate-400 mt-1">Manage your booked travel itineraries, payment details, and reservations</p>
+            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Traveler Dashboard</h1>
+            <p className="text-slate-600 dark:text-slate-400 mt-1">Manage your booked travel itineraries, payment details, and reservations</p>
           </div>
           {isPlannerOrAdmin && (
             <Link
@@ -161,7 +161,7 @@ export default function ManageDashboardPage() {
         </div>
 
         {deleteError && (
-          <div className="bg-rose-500/15 border border-rose-500/30 text-rose-300 p-3 rounded-lg flex items-center space-x-2 text-sm mb-4">
+          <div className="bg-rose-500/15 border border-rose-500/30 text-rose-600 dark:text-rose-300 p-3 rounded-lg flex items-center space-x-2 text-sm mb-4">
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{deleteError}</span>
           </div>
@@ -169,13 +169,13 @@ export default function ManageDashboardPage() {
 
         {/* Custom Tabs (Only show Created tab for Planners & Admins) */}
         {isPlannerOrAdmin && (
-          <div className="flex border-b border-slate-800 mb-6">
+          <div className="flex border-b border-slate-200 dark:border-slate-800 mb-6">
             <button
               onClick={() => setActiveTab("booked")}
               className={`px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 activeTab === "booked"
-                  ? "text-teal-400 border-b-2 border-teal-400 font-bold"
-                  : "text-slate-400 hover:text-white"
+                  ? "text-teal-600 dark:text-teal-400 border-b-2 border-teal-500 dark:border-teal-400 font-bold"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               My Booked Trips
@@ -184,8 +184,8 @@ export default function ManageDashboardPage() {
               onClick={() => setActiveTab("created")}
               className={`px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 activeTab === "created"
-                  ? "text-teal-400 border-b-2 border-teal-400 font-bold"
-                  : "text-slate-400 hover:text-white"
+                  ? "text-teal-600 dark:text-teal-400 border-b-2 border-teal-500 dark:border-teal-400 font-bold"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               My Custom Itineraries
@@ -194,22 +194,22 @@ export default function ManageDashboardPage() {
         )}
 
         {isLoading ? (
-          <Card className="bg-slate-900 border-slate-800 p-6 space-y-3">
-            <Skeleton className="h-8 w-full bg-slate-850" />
-            <Skeleton className="h-8 w-full bg-slate-850" />
-            <Skeleton className="h-8 w-full bg-slate-850" />
+          <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-6 space-y-3 shadow-md">
+            <Skeleton className="h-8 w-full bg-slate-100 dark:bg-slate-850" />
+            <Skeleton className="h-8 w-full bg-slate-100 dark:bg-slate-850" />
+            <Skeleton className="h-8 w-full bg-slate-100 dark:bg-slate-850" />
           </Card>
         ) : isError ? (
-          <div className="text-center py-12 bg-slate-900/40 rounded-xl border border-slate-800">
-            <p className="text-rose-400 font-semibold mb-2">Error Loading Dashboard</p>
+          <div className="text-center py-12 bg-white dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <p className="text-rose-500 dark:text-rose-400 font-semibold mb-2">Error Loading Dashboard</p>
             <p className="text-slate-500 text-sm">Failed to connect to the backend server.</p>
           </div>
         ) : activeTab === "booked" || !isPlannerOrAdmin ? (
           /* BOOKED TRIPS VIEW */
           bookings?.length === 0 ? (
-            <div className="text-center py-16 bg-slate-900/40 rounded-xl border border-slate-800">
-              <Plane className="mx-auto h-12 w-12 text-slate-600 mb-4 animate-bounce" />
-              <p className="text-slate-300 font-semibold text-lg mb-1">No Booked Trips Yet</p>
+            <div className="text-center py-16 bg-white dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <Plane className="mx-auto h-12 w-12 text-slate-400 dark:text-slate-600 mb-4 animate-bounce" />
+              <p className="text-slate-800 dark:text-slate-300 font-semibold text-lg mb-1">No Booked Trips Yet</p>
               <p className="text-slate-500 text-sm mb-6">Explore public itineraries and book your next journey.</p>
               <Link
                 href="/itineraries"
@@ -221,24 +221,24 @@ export default function ManageDashboardPage() {
               </Link>
             </div>
           ) : (
-            <Card className="bg-slate-900 border-slate-800 overflow-hidden shadow-2xl">
+            <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 overflow-hidden shadow-xl text-slate-900 dark:text-white">
               <Table>
-                <TableHeader className="bg-slate-950">
-                  <TableRow className="border-slate-800 hover:bg-slate-950">
-                    <TableHead className="text-slate-400 w-[80px] hidden md:table-cell">Cover</TableHead>
-                    <TableHead className="text-slate-400">Itinerary</TableHead>
-                    <TableHead className="text-slate-400">Start Date</TableHead>
-                    <TableHead className="text-slate-400 hidden sm:table-cell">Travelers</TableHead>
-                    <TableHead className="text-slate-400 hidden sm:table-cell">Payment Status</TableHead>
-                    <TableHead className="text-slate-400 text-right">Total Price</TableHead>
-                    <TableHead className="text-slate-400 text-center w-[120px]">Actions</TableHead>
+                <TableHeader className="bg-slate-100 dark:bg-slate-950">
+                  <TableRow className="border-slate-200 dark:border-slate-800 hover:bg-transparent">
+                    <TableHead className="text-slate-600 dark:text-slate-400 w-[80px] hidden md:table-cell">Cover</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400">Itinerary</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400">Start Date</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 hidden sm:table-cell">Travelers</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 hidden sm:table-cell">Payment Status</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 text-right">Total Price</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 text-center w-[120px]">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {bookings?.map((booking) => (
-                    <TableRow key={booking._id} className="border-slate-850 hover:bg-slate-850/30">
+                    <TableRow key={booking._id} className="border-slate-200 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-slate-850/30">
                       <TableCell className="hidden md:table-cell">
-                        <div className="h-10 w-12 rounded overflow-hidden relative bg-slate-950">
+                        <div className="h-10 w-12 rounded overflow-hidden relative bg-slate-200 dark:bg-slate-950">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={booking.itineraryId?.coverImage || "https://images.unsplash.com/photo-1488646953014-85cb44e25828"}
@@ -247,35 +247,35 @@ export default function ManageDashboardPage() {
                           />
                         </div>
                       </TableCell>
-                      <TableCell className="font-semibold text-white max-w-[200px] truncate">
+                      <TableCell className="font-semibold text-slate-900 dark:text-white max-w-[200px] truncate">
                         <div>
                           <span className="block truncate">{booking.itineraryId?.title || "Deleted Itinerary"}</span>
                           <span className="text-[10px] text-slate-500 flex items-center mt-0.5 font-normal">
-                            <MapPin className="mr-1 h-3 w-3 text-teal-400 shrink-0" />
+                            <MapPin className="mr-1 h-3 w-3 text-teal-600 dark:text-teal-400 shrink-0" />
                             <span className="truncate">{booking.itineraryId?.destination || "Unknown"}</span>
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-slate-300">
+                      <TableCell className="text-slate-700 dark:text-slate-300">
                         {new Date(booking.startDate).toLocaleDateString("en-US", {
                           year: "numeric",
                           month: "short",
                           day: "numeric"
                         })}
                       </TableCell>
-                      <TableCell className="text-slate-300 hidden sm:table-cell">
+                      <TableCell className="text-slate-700 dark:text-slate-300 hidden sm:table-cell">
                         {booking.numberOfTravelers} Guests
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
                           booking.status === "cancelled"
-                            ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
-                            : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                            ? "bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20"
+                            : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
                         }`}>
                           {booking.status === "cancelled" ? "Cancelled" : "Paid"}
                         </span>
                       </TableCell>
-                      <TableCell className="text-right font-extrabold text-teal-400">
+                      <TableCell className="text-right font-extrabold text-teal-600 dark:text-teal-400">
                         ${booking.totalPrice.toLocaleString()}
                       </TableCell>
                       <TableCell className="text-center">
@@ -286,7 +286,7 @@ export default function ManageDashboardPage() {
                               className={buttonVariants({
                                 variant: "ghost",
                                 size: "icon",
-                                className: "h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800 flex items-center justify-center cursor-pointer"
+                                className: "h-8 w-8 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center cursor-pointer"
                               })}
                               title="View Itinerary Schedule"
                             >
@@ -299,7 +299,7 @@ export default function ManageDashboardPage() {
                               size="icon"
                               onClick={() => handleCancelBooking(booking._id)}
                               disabled={cancelBookingMutation.isPending}
-                              className="h-8 w-8 text-slate-500 hover:text-rose-400 hover:bg-slate-800"
+                              className="h-8 w-8 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-800"
                               title="Cancel Booking"
                             >
                               <Trash2 className="h-4 w-4" />
@@ -316,9 +316,9 @@ export default function ManageDashboardPage() {
         ) : (
           /* CREATED ITINERARIES VIEW */
           itineraries?.length === 0 ? (
-            <div className="text-center py-16 bg-slate-900/40 rounded-xl border border-slate-800">
-              <Plane className="mx-auto h-12 w-12 text-slate-600 mb-4 animate-bounce" />
-              <p className="text-slate-300 font-semibold text-lg mb-1">No Custom Itineraries Created</p>
+            <div className="text-center py-16 bg-white dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <Plane className="mx-auto h-12 w-12 text-slate-400 dark:text-slate-600 mb-4 animate-bounce" />
+              <p className="text-slate-800 dark:text-slate-300 font-semibold text-lg mb-1">No Custom Itineraries Created</p>
               <p className="text-slate-500 text-sm mb-6">Design custom travel packages and share them with the world.</p>
               <Link
                 href="/itineraries/add"
@@ -330,25 +330,25 @@ export default function ManageDashboardPage() {
               </Link>
             </div>
           ) : (
-            <Card className="bg-slate-900 border-slate-800 overflow-hidden shadow-2xl">
+            <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 overflow-hidden shadow-xl text-slate-900 dark:text-white">
               <Table>
-                <TableHeader className="bg-slate-950">
-                  <TableRow className="border-slate-800 hover:bg-slate-950">
-                    <TableHead className="text-slate-400 w-[80px] hidden md:table-cell">Cover</TableHead>
-                    <TableHead className="text-slate-400">Title</TableHead>
-                    <TableHead className="text-slate-400">Destination</TableHead>
-                    <TableHead className="text-slate-400 hidden sm:table-cell">Status</TableHead>
-                    <TableHead className="text-slate-400 hidden sm:table-cell">Category</TableHead>
-                    <TableHead className="text-slate-400 hidden sm:table-cell">Duration</TableHead>
-                    <TableHead className="text-slate-400 text-right">Cost</TableHead>
-                    <TableHead className="text-slate-400 text-center w-[120px]">Actions</TableHead>
+                <TableHeader className="bg-slate-100 dark:bg-slate-950">
+                  <TableRow className="border-slate-200 dark:border-slate-800 hover:bg-transparent">
+                    <TableHead className="text-slate-600 dark:text-slate-400 w-[80px] hidden md:table-cell">Cover</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400">Title</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400">Destination</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 hidden sm:table-cell">Status</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 hidden sm:table-cell">Category</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 hidden sm:table-cell">Duration</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 text-right">Cost</TableHead>
+                    <TableHead className="text-slate-600 dark:text-slate-400 text-center w-[120px]">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {itineraries?.map((itinerary) => (
-                    <TableRow key={itinerary._id} className="border-slate-850 hover:bg-slate-850/30">
+                    <TableRow key={itinerary._id} className="border-slate-200 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-slate-850/30">
                       <TableCell className="hidden md:table-cell">
-                        <div className="h-10 w-12 rounded overflow-hidden relative bg-slate-950">
+                        <div className="h-10 w-12 rounded overflow-hidden relative bg-slate-200 dark:bg-slate-950">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={itinerary.coverImage}
@@ -357,30 +357,30 @@ export default function ManageDashboardPage() {
                           />
                         </div>
                       </TableCell>
-                      <TableCell className="font-semibold text-white max-w-[200px] truncate">
+                      <TableCell className="font-semibold text-slate-900 dark:text-white max-w-[200px] truncate">
                         {itinerary.title}
                       </TableCell>
-                      <TableCell className="text-slate-300 max-w-[150px] truncate">
+                      <TableCell className="text-slate-700 dark:text-slate-300 max-w-[150px] truncate">
                         {itinerary.destination}
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
                         <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
                           itinerary.isPublic !== false
-                            ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                            : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                            ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                            : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
                         }`}>
                           {itinerary.isPublic !== false ? "Public" : "Private"}
                         </span>
                       </TableCell>
                       <TableCell className="hidden sm:table-cell">
-                        <span className="bg-slate-800 text-teal-400 px-2 py-0.5 rounded text-xs font-semibold uppercase">
+                        <span className="bg-slate-100 dark:bg-slate-800 text-teal-600 dark:text-teal-400 px-2 py-0.5 rounded text-xs font-semibold uppercase">
                           {itinerary.category}
                         </span>
                       </TableCell>
-                      <TableCell className="text-slate-300 hidden sm:table-cell">
+                      <TableCell className="text-slate-700 dark:text-slate-300 hidden sm:table-cell">
                         {itinerary.duration} Days
                       </TableCell>
-                      <TableCell className="text-right font-extrabold text-teal-400">
+                      <TableCell className="text-right font-extrabold text-teal-600 dark:text-teal-400">
                         ${itinerary.cost.toLocaleString()}
                       </TableCell>
                       <TableCell className="text-center">
@@ -390,7 +390,7 @@ export default function ManageDashboardPage() {
                             className={buttonVariants({
                               variant: "ghost",
                               size: "icon",
-                              className: "h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800 flex items-center justify-center cursor-pointer"
+                              className: "h-8 w-8 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center cursor-pointer"
                             })}
                             title="View Itinerary"
                           >
@@ -401,7 +401,7 @@ export default function ManageDashboardPage() {
                             size="icon"
                             onClick={() => handleDelete(itinerary._id)}
                             disabled={deleteMutation.isPending}
-                            className="h-8 w-8 text-slate-500 hover:text-rose-400 hover:bg-slate-800"
+                            className="h-8 w-8 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-slate-100 dark:hover:bg-slate-800"
                             title="Delete Itinerary"
                           >
                             <Trash2 className="h-4 w-4" />
