@@ -39,30 +39,37 @@ export default function Navbar() {
     });
   };
 
-  let navLinks = session
-    ? [
+  let navLinks = [
+    { name: "Home", href: "/" },
+    { name: "Explore", href: "/itineraries" },
+    { name: "About", href: "/about" }
+  ];
+
+  if (session) {
+    const role = session.user.role || "traveler";
+    if (role === "admin") {
+      navLinks = [
+        { name: "Home", href: "/" },
+        { name: "Explore", href: "/itineraries" },
+        { name: "Admin Dashboard", href: "/admin" }
+      ];
+    } else if (role === "planner") {
+      navLinks = [
+        { name: "Home", href: "/" },
+        { name: "Explore", href: "/itineraries" },
+        { name: "Add Itinerary", href: "/itineraries/add" },
+        { name: "Seller Dashboard", href: "/planner" },
+        { name: "Expense Tracker", href: "/expenses" }
+      ];
+    } else {
+      // Traveler role
+      navLinks = [
         { name: "Home", href: "/" },
         { name: "Explore", href: "/itineraries" },
         { name: "Traveler Dashboard", href: "/itineraries/manage" },
         { name: "Expense Tracker", href: "/expenses" }
-      ]
-    : [
-        { name: "Home", href: "/" },
-        { name: "Explore", href: "/itineraries" },
-        { name: "About", href: "/about" }
       ];
-
-  if (session && ["planner", "admin"].includes(session.user.role || "")) {
-    navLinks = [
-      ...navLinks.slice(0, 2),
-      { name: "Add Itinerary", href: "/itineraries/add" },
-      { name: "Seller Dashboard", href: "/planner" },
-      ...navLinks.slice(2)
-    ];
-  }
-
-  if (session && session.user.role === "admin") {
-    navLinks = [...navLinks, { name: "Admin Dashboard", href: "/admin" }];
+    }
   }
 
   const activeClass = (path: string) =>
