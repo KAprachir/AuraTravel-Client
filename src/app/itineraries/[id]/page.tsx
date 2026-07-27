@@ -25,7 +25,8 @@ import {
   CalendarDays,
   Users,
   Check,
-  AlertCircle
+  AlertCircle,
+  ShieldCheck
 } from "lucide-react";
 
 interface DailyActivity {
@@ -47,6 +48,10 @@ interface ItineraryData {
   category: string;
   dailyPlan: DailyActivity[];
   creator: string;
+  creatorName?: string;
+  creatorBio?: string;
+  creatorAvatar?: string;
+  creatorExperience?: number;
   createdAt: string;
 }
 
@@ -305,6 +310,39 @@ export default function ItineraryDetailsPage({ params }: { params: Promise<{ id:
 
           {/* Right Column: Statistics & Call to Action */}
           <div className="space-y-6">
+            {/* Dedicated Planner Profile Card */}
+            <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-5 shadow-lg">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 block mb-3">
+                Offered By Lead Planner
+              </span>
+              <div className="flex items-center space-x-3 mb-3">
+                {itinerary.creatorAvatar ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={itinerary.creatorAvatar}
+                    alt={itinerary.creatorName || "Planner"}
+                    className="h-12 w-12 rounded-full object-cover border-2 border-teal-500 shrink-0 shadow-md"
+                  />
+                ) : (
+                  <div className="h-12 w-12 rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold text-lg shrink-0">
+                    <User className="h-6 w-6" />
+                  </div>
+                )}
+                <div>
+                  <div className="flex items-center space-x-1.5">
+                    <h4 className="font-bold text-slate-900 dark:text-white text-base">{itinerary.creatorName || "AuraTravel Planner"}</h4>
+                    <ShieldCheck className="h-4 w-4 text-teal-500 shrink-0" />
+                  </div>
+                  <span className="text-[11px] font-semibold text-teal-700 dark:text-teal-300 bg-teal-500/10 px-2 py-0.5 rounded inline-block mt-0.5">
+                    Verified Guide • {itinerary.creatorExperience || 5}+ yrs exp
+                  </span>
+                </div>
+              </div>
+              <p className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
+                {itinerary.creatorBio || "Certified Travel Curator specializing in tailored regional itineraries."}
+              </p>
+            </Card>
+
             <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-6 shadow-xl sticky top-24">
               <h3 className="font-bold text-slate-900 dark:text-white text-lg border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
                 Trip Details & Booking
@@ -326,12 +364,11 @@ export default function ItineraryDetailsPage({ params }: { params: Promise<{ id:
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-slate-100 dark:border-slate-800/50">
                   <span className="text-slate-500 flex items-center">
-                    <Calendar className="mr-2 h-4 w-4 text-teal-600 dark:text-teal-400" />
-                    Author
+                    <User className="mr-2 h-4 w-4 text-teal-600 dark:text-teal-400" />
+                    Offered By
                   </span>
-                  <span className="font-semibold text-slate-600 dark:text-slate-400 flex items-center">
-                    <User className="mr-1 h-3.5 w-3.5 text-teal-600 dark:text-teal-400" />
-                    {itinerary.creator === "admin-system-seed" ? "AuraTravel Team" : "Local Guide"}
+                  <span className="font-semibold text-slate-800 dark:text-slate-200 flex items-center">
+                    {itinerary.creatorName || "AuraTravel Planner"}
                   </span>
                 </div>
                 

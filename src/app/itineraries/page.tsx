@@ -18,7 +18,9 @@ import {
   SlidersHorizontal,
   ArrowUpDown,
   Tag,
-  DollarSign
+  DollarSign,
+  User,
+  ShieldCheck
 } from "lucide-react";
 
 interface ItineraryCardData {
@@ -31,6 +33,10 @@ interface ItineraryCardData {
   cost: number;
   rating: number;
   category: string;
+  creatorName?: string;
+  creatorBio?: string;
+  creatorAvatar?: string;
+  creatorExperience?: number;
 }
 
 export default function ExplorePage() {
@@ -300,8 +306,28 @@ export default function ExplorePage() {
                 </div>
 
                 {/* Content */}
-                <CardContent className="p-4 flex-grow flex flex-col justify-between space-y-2">
+                <CardContent className="p-4 flex-grow flex flex-col justify-between space-y-3">
                   <div>
+                    {/* Planner Info Badge */}
+                    <div className="flex items-center space-x-2 mb-2 pb-1.5 border-b border-slate-100 dark:border-slate-800/40">
+                      {itinerary.creatorAvatar ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={itinerary.creatorAvatar}
+                          alt={itinerary.creatorName || "Planner"}
+                          className="h-5 w-5 rounded-full object-cover border border-teal-500/40 shrink-0"
+                        />
+                      ) : (
+                        <div className="h-5 w-5 rounded-full bg-teal-500/20 text-teal-600 dark:text-teal-400 flex items-center justify-center text-[10px] font-bold shrink-0">
+                          <User className="h-3 w-3" />
+                        </div>
+                      )}
+                      <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 truncate flex items-center">
+                        {itinerary.creatorName || "AuraTravel Planner"}
+                        <ShieldCheck className="h-3 w-3 text-teal-500 ml-1 inline shrink-0" />
+                      </span>
+                    </div>
+
                     <div className="flex items-center text-slate-500 text-xs mb-1">
                       <MapPin className="mr-1 h-3 w-3 text-teal-600 dark:text-teal-400 shrink-0" />
                       <span className="truncate">{itinerary.destination}</span>
