@@ -83,14 +83,37 @@ export default function ManageDashboardPage() {
   const isLoading = activeTab === "booked" ? isBookingsLoading : isCreatedLoading;
   const isError = activeTab === "booked" ? isBookingsError : isCreatedError;
 
-  // Delete mutation
+  const isPlannerOrAdmin = ["planner", "admin"].includes(session?.user?.role || "");
+
+  // Cancel booking mutation
+  const cancelBookingMutation = useMutation({
+    mutationFn: (bookingId: string) =>
+      apiFetch(`/api/bookings/${bookingId}/cancel`, {
+        method: "PATCH"
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["my-bookings"] });
+      setDeleteError("");
+    },
+    onError: (err: any) => {
+      setDeleteError(err.message || "Failed to cancel booking.");
+    }
+  });
+
+  const handleCancelBooking = (id: string) => {
+    if (confirm("Are you sure you want to cancel this booking?")) {
+      setDeleteError("");
+      cancelBookingMutation.mutate(id);
+    }
+  };
+
+  // Delete mutation for custom itineraries
   const deleteMutation = useMutation({
     mutationFn: (id: string) =>
       apiFetch(`/api/itineraries/${id}`, {
         method: "DELETE"
       }),
     onSuccess: () => {
-      // Invalidate query to trigger refetch
       queryClient.invalidateQueries({ queryKey: ["my-itineraries"] });
       queryClient.invalidateQueries({ queryKey: ["itineraries"] });
     },
@@ -122,49 +145,53 @@ export default function ManageDashboardPage() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
             <h1 className="text-3xl font-extrabold text-white tracking-tight">Traveler Dashboard</h1>
-            <p className="text-slate-400 mt-1">Manage your booked travel itineraries and custom schedules</p>
+            <p className="text-slate-400 mt-1">Manage your booked travel itineraries, payment details, and reservations</p>
           </div>
-          <Link
-            href="/itineraries/add"
-            className={buttonVariants({
-              className: "bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold shrink-0 cursor-pointer flex items-center justify-center"
-            })}
-          >
-            <Plus className="mr-1.5 h-4 w-4" />
-            New Itinerary
-          </Link>
+          {isPlannerOrAdmin && (
+            <Link
+              href="/itineraries/add"
+              className={buttonVariants({
+                className: "bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold shrink-0 cursor-pointer flex items-center justify-center"
+              })}
+            >
+              <Plus className="mr-1.5 h-4 w-4" />
+              New Itinerary
+            </Link>
+          )}
         </div>
 
         {deleteError && (
           <div className="bg-rose-500/15 border border-rose-500/30 text-rose-300 p-3 rounded-lg flex items-center space-x-2 text-sm mb-4">
-            <AlertCircle className="h-4 w-4" />
+            <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{deleteError}</span>
           </div>
         )}
 
-        {/* Custom Tabs */}
-        <div className="flex border-b border-slate-800 mb-6">
-          <button
-            onClick={() => setActiveTab("booked")}
-            className={`px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
-              activeTab === "booked"
-                ? "text-teal-400 border-b-2 border-teal-400 font-bold"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            My Booked Trips
-          </button>
-          <button
-            onClick={() => setActiveTab("created")}
-            className={`px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
-              activeTab === "created"
-                ? "text-teal-400 border-b-2 border-teal-400 font-bold"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            My Custom Itineraries
-          </button>
-        </div>
+        {/* Custom Tabs (Only show Created tab for Planners & Admins) */}
+        {isPlannerOrAdmin && (
+          <div className="flex border-b border-slate-800 mb-6">
+            <button
+              onClick={() => setActiveTab("booked")}
+              className={`px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                activeTab === "booked"
+                  ? "text-teal-400 border-b-2 border-teal-400 font-bold"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              My Booked Trips
+            </button>
+            <button
+              onClick={() => setActiveTab("created")}
+              className={`px-4 py-2 text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                activeTab === "created"
+                  ? "text-teal-400 border-b-2 border-teal-400 font-bold"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              My Custom Itineraries
+            </button>
+          </div>
+        )}
 
         {isLoading ? (
           <Card className="bg-slate-900 border-slate-800 p-6 space-y-3">
@@ -177,7 +204,7 @@ export default function ManageDashboardPage() {
             <p className="text-rose-400 font-semibold mb-2">Error Loading Dashboard</p>
             <p className="text-slate-500 text-sm">Failed to connect to the backend server.</p>
           </div>
-        ) : activeTab === "booked" ? (
+        ) : activeTab === "booked" || !isPlannerOrAdmin ? (
           /* BOOKED TRIPS VIEW */
           bookings?.length === 0 ? (
             <div className="text-center py-16 bg-slate-900/40 rounded-xl border border-slate-800">
@@ -202,8 +229,9 @@ export default function ManageDashboardPage() {
                     <TableHead className="text-slate-400">Itinerary</TableHead>
                     <TableHead className="text-slate-400">Start Date</TableHead>
                     <TableHead className="text-slate-400 hidden sm:table-cell">Travelers</TableHead>
+                    <TableHead className="text-slate-400 hidden sm:table-cell">Payment Status</TableHead>
                     <TableHead className="text-slate-400 text-right">Total Price</TableHead>
-                    <TableHead className="text-slate-400 text-center w-[100px]">Actions</TableHead>
+                    <TableHead className="text-slate-400 text-center w-[120px]">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -238,25 +266,46 @@ export default function ManageDashboardPage() {
                       <TableCell className="text-slate-300 hidden sm:table-cell">
                         {booking.numberOfTravelers} Guests
                       </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <span className={`px-2 py-0.5 rounded text-xs font-semibold ${
+                          booking.status === "cancelled"
+                            ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                            : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                        }`}>
+                          {booking.status === "cancelled" ? "Cancelled" : "Paid"}
+                        </span>
+                      </TableCell>
                       <TableCell className="text-right font-extrabold text-teal-400">
                         ${booking.totalPrice.toLocaleString()}
                       </TableCell>
                       <TableCell className="text-center">
-                        {booking.itineraryId ? (
-                          <Link
-                            href={`/itineraries/${booking.itineraryId._id}`}
-                            className={buttonVariants({
-                              variant: "ghost",
-                              size: "icon",
-                              className: "h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800 flex items-center justify-center cursor-pointer"
-                            })}
-                            title="View Itinerary Schedule"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </Link>
-                        ) : (
-                          <span className="text-xs text-slate-600">Unavailable</span>
-                        )}
+                        <div className="flex items-center justify-center space-x-1.5">
+                          {booking.itineraryId && (
+                            <Link
+                              href={`/itineraries/${booking.itineraryId._id}`}
+                              className={buttonVariants({
+                                variant: "ghost",
+                                size: "icon",
+                                className: "h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-slate-800 flex items-center justify-center cursor-pointer"
+                              })}
+                              title="View Itinerary Schedule"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Link>
+                          )}
+                          {booking.status !== "cancelled" && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleCancelBooking(booking._id)}
+                              disabled={cancelBookingMutation.isPending}
+                              className="h-8 w-8 text-slate-500 hover:text-rose-400 hover:bg-slate-800"
+                              title="Cancel Booking"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}

@@ -43,7 +43,7 @@ export default function Navbar() {
     ? [
         { name: "Home", href: "/" },
         { name: "Explore", href: "/itineraries" },
-        { name: "Manage Dashboard", href: "/itineraries/manage" },
+        { name: "Traveler Dashboard", href: "/itineraries/manage" },
         { name: "Expense Tracker", href: "/expenses" }
       ]
     : [
