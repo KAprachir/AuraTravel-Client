@@ -166,35 +166,35 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200 overflow-x-hidden">
       <Navbar />
 
       <main className="flex-grow">
         {/* HERO SECTION WITH RICH TRAVEL IMAGERY */}
-        <section className="relative min-h-[85vh] flex items-center justify-center py-24 px-4 overflow-hidden">
+        <section className="relative min-h-[85vh] flex items-center justify-center py-24 px-4 overflow-hidden bg-slate-100/50 dark:bg-slate-950 transition-colors duration-200">
           {/* Background Travel Image Overlay */}
           <div className="absolute inset-0 z-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920&auto=format&fit=crop"
               alt="Travel Hero Background"
-              className="w-full h-full object-cover opacity-25 filter brightness-75 scale-105 transform animate-pulse duration-1000"
+              className="w-full h-full object-cover opacity-15 dark:opacity-25 filter brightness-90 dark:brightness-75 scale-105 transform animate-pulse duration-1000"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-slate-950/40" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-500/15 via-transparent to-slate-950" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-slate-50/80 to-slate-50/40 dark:from-slate-950 dark:via-slate-950/80 dark:to-slate-950/40" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-500/10 dark:from-teal-500/15 via-transparent to-slate-50 dark:to-slate-950" />
           </div>
 
           <div className="max-w-5xl mx-auto text-center space-y-8 z-10 relative">
-            <div className="inline-flex items-center space-x-2 bg-slate-900/90 border border-teal-500/30 px-4 py-1.5 rounded-full text-xs text-teal-400 font-semibold mb-2 shadow-lg backdrop-blur-md">
-              <Sparkles className="h-4 w-4 text-amber-400 shrink-0" />
+            <div className="inline-flex items-center space-x-2 bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-teal-500/30 px-4 py-1.5 rounded-full text-xs text-teal-700 dark:text-teal-400 font-semibold mb-2 shadow-md backdrop-blur-md">
+              <Sparkles className="h-4 w-4 text-amber-500 dark:text-amber-400 shrink-0" />
               <span>Explore Over 140 Extraordinary Worldwide Destinations</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-tight">
-              Discover Earth&apos;s Most <span className="text-teal-400 drop-shadow-md">Extraordinary</span> Journeys
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+              Discover Earth&apos;s Most <span className="text-teal-600 dark:text-teal-400 drop-shadow-md">Extraordinary</span> Journeys
             </h1>
 
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
               Curated itineraries crafted by master travel planners, paired with an intelligent AI copilot to guide your next unforgettable expedition.
             </p>
 
@@ -215,7 +215,7 @@ export default function LandingPage() {
                   className={buttonVariants({
                     variant: "outline",
                     size: "lg",
-                    className: "border border-slate-700 bg-slate-900/80 text-white hover:bg-slate-800 hover:text-white px-8 py-6 text-base rounded-full backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-200"
+                    className: "border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 px-8 py-6 text-base rounded-full backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-200"
                   })}
                 >
                   My Dashboard
@@ -226,7 +226,7 @@ export default function LandingPage() {
                   className={buttonVariants({
                     variant: "outline",
                     size: "lg",
-                    className: "border border-slate-700 bg-slate-900/80 text-white hover:bg-slate-800 hover:text-white px-8 py-6 text-base rounded-full backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-200"
+                    className: "border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 px-8 py-6 text-base rounded-full backdrop-blur-md flex items-center justify-center cursor-pointer transition-all duration-200"
                   })}
                 >
                   Start Planning Free
@@ -235,21 +235,21 @@ export default function LandingPage() {
             </div>
 
             {/* Hero Quick Badge Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 border-t border-slate-800/60 max-w-4xl mx-auto">
-              <div className="flex items-center justify-center space-x-2 text-slate-300 text-xs font-medium bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80 backdrop-blur-sm">
-                <Globe className="h-4 w-4 text-teal-400 shrink-0" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12 border-t border-slate-200 dark:border-slate-800/60 max-w-4xl mx-auto">
+              <div className="flex items-center justify-center space-x-2 text-slate-700 dark:text-slate-300 text-xs font-medium bg-white/80 dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/80 backdrop-blur-sm shadow-sm">
+                <Globe className="h-4 w-4 text-teal-600 dark:text-teal-400 shrink-0" />
                 <span>Global Coverage</span>
               </div>
-              <div className="flex items-center justify-center space-x-2 text-slate-300 text-xs font-medium bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80 backdrop-blur-sm">
-                <Compass className="h-4 w-4 text-amber-400 shrink-0" />
+              <div className="flex items-center justify-center space-x-2 text-slate-700 dark:text-slate-300 text-xs font-medium bg-white/80 dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/80 backdrop-blur-sm shadow-sm">
+                <Compass className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
                 <span>Custom Schedules</span>
               </div>
-              <div className="flex items-center justify-center space-x-2 text-slate-300 text-xs font-medium bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80 backdrop-blur-sm">
-                <Receipt className="h-4 w-4 text-teal-400 shrink-0" />
+              <div className="flex items-center justify-center space-x-2 text-slate-700 dark:text-slate-300 text-xs font-medium bg-white/80 dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/80 backdrop-blur-sm shadow-sm">
+                <Receipt className="h-4 w-4 text-teal-600 dark:text-teal-400 shrink-0" />
                 <span>Smart Expense Scanner</span>
               </div>
-              <div className="flex items-center justify-center space-x-2 text-slate-300 text-xs font-medium bg-slate-900/60 p-2.5 rounded-xl border border-slate-800/80 backdrop-blur-sm">
-                <BrainCircuit className="h-4 w-4 text-blue-400 shrink-0" />
+              <div className="flex items-center justify-center space-x-2 text-slate-700 dark:text-slate-300 text-xs font-medium bg-white/80 dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800/80 backdrop-blur-sm shadow-sm">
+                <BrainCircuit className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
                 <span>24/7 AI Assistant</span>
               </div>
             </div>
@@ -257,13 +257,13 @@ export default function LandingPage() {
         </section>
 
         {/* SECTION 1: FEATURED DESTINATIONS SHOWCASE */}
-        <section className="py-24 px-4 bg-slate-950 border-t border-slate-900 relative">
+        <section className="py-24 px-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 relative transition-colors duration-200">
           <div className="max-w-6xl mx-auto space-y-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
-                <div className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-1">Hand-Picked Packages</div>
-                <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">Featured Travel Destinations</h2>
-                <p className="text-slate-400 mt-2 text-sm max-w-xl">
+                <div className="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-widest mb-1">Hand-Picked Packages</div>
+                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">Featured Travel Destinations</h2>
+                <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm max-w-xl">
                   Uncover top-rated travel packages curated by expert travel planners and backed by verified traveler reviews.
                 </p>
               </div>
@@ -271,7 +271,7 @@ export default function LandingPage() {
                 href="/itineraries"
                 className={buttonVariants({
                   variant: "outline",
-                  className: "border-slate-800 text-teal-400 hover:text-teal-300 hover:bg-slate-900 font-semibold cursor-pointer shrink-0"
+                  className: "border-slate-300 dark:border-slate-800 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 bg-white dark:bg-slate-900 font-semibold cursor-pointer shrink-0"
                 })}
               >
                 View All Destinations
@@ -284,27 +284,27 @@ export default function LandingPage() {
               {featuredDestinations.map((dest) => (
                 <Card
                   key={dest.id}
-                  className="bg-slate-900 border-slate-800 overflow-hidden text-white shadow-xl hover:border-slate-700 transition-all duration-300 group flex flex-col justify-between"
+                  className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 overflow-hidden text-slate-900 dark:text-white shadow-lg hover:shadow-xl dark:shadow-slate-950/50 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 group flex flex-col justify-between"
                 >
-                  <div className="relative h-56 w-full overflow-hidden bg-slate-950">
+                  <div className="relative h-56 w-full overflow-hidden bg-slate-100 dark:bg-slate-950">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={dest.image}
                       alt={dest.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 dark:from-slate-900 via-transparent to-transparent opacity-80" />
 
-                    <div className="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-extrabold text-teal-400 uppercase border border-teal-500/30">
+                    <div className="absolute top-3 left-3 bg-white/90 dark:bg-slate-950/80 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-extrabold text-teal-700 dark:text-teal-400 uppercase border border-teal-500/30">
                       {dest.badge}
                     </div>
 
-                    <div className="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md p-1.5 rounded-full text-slate-300 hover:text-rose-400 transition-colors cursor-pointer">
+                    <div className="absolute top-3 right-3 bg-white/90 dark:bg-slate-950/80 backdrop-blur-md p-1.5 rounded-full text-slate-600 dark:text-slate-300 hover:text-rose-500 transition-colors cursor-pointer">
                       <Heart className="h-4 w-4" />
                     </div>
 
                     <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center text-xs">
-                      <span className="bg-slate-950/90 backdrop-blur-md text-slate-300 px-2.5 py-1 rounded-md flex items-center font-medium">
+                      <span className="bg-slate-950/90 backdrop-blur-md text-white px-2.5 py-1 rounded-md flex items-center font-medium">
                         <Clock className="h-3 w-3 mr-1 text-teal-400" /> {dest.duration}
                       </span>
                       <span className="bg-teal-500 text-slate-950 px-2.5 py-1 rounded-md font-black text-xs">
@@ -315,30 +315,30 @@ export default function LandingPage() {
 
                   <CardContent className="p-5 space-y-4 flex-grow flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
-                        <span className="flex items-center text-teal-400 font-semibold">
+                      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-1">
+                        <span className="flex items-center text-teal-600 dark:text-teal-400 font-semibold">
                           <MapPin className="h-3.5 w-3.5 mr-1" /> {dest.location}
                         </span>
-                        <span className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded text-[10px] uppercase font-bold">
+                        <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-0.5 rounded text-[10px] uppercase font-bold">
                           {dest.category}
                         </span>
                       </div>
 
-                      <h3 className="text-lg font-bold text-white group-hover:text-teal-400 transition-colors line-clamp-1">
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors line-clamp-1">
                         {dest.name}
                       </h3>
                     </div>
 
-                    <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                      <div className="flex items-center text-xs text-amber-400 font-bold space-x-1">
+                    <div className="pt-3 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between">
+                      <div className="flex items-center text-xs text-amber-500 dark:text-amber-400 font-bold space-x-1">
                         <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
                         <span>{dest.rating}</span>
-                        <span className="text-slate-500 font-normal">({dest.reviewsCount})</span>
+                        <span className="text-slate-400 dark:text-slate-500 font-normal">({dest.reviewsCount})</span>
                       </div>
 
                       <Link
                         href={`/itineraries`}
-                        className="text-xs text-teal-400 hover:text-teal-300 font-bold flex items-center hover:underline"
+                        className="text-xs text-teal-600 dark:text-teal-400 hover:underline font-bold flex items-center"
                       >
                         Explore Package
                         <ArrowRight className="h-3.5 w-3.5 ml-1" />
@@ -352,57 +352,57 @@ export default function LandingPage() {
         </section>
 
         {/* SECTION 2: DYNAMIC VALUE PROPOSITION */}
-        <section className="py-20 px-4 bg-slate-900/30 border-t border-slate-900 relative">
+        <section className="py-20 px-4 bg-slate-100/60 dark:bg-slate-900/30 border-t border-slate-200 dark:border-slate-900 relative transition-colors duration-200">
           <div className="max-w-6xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="text-3xl font-extrabold text-white tracking-tight">Smart Travel Features at Your Service</h2>
-              <p className="text-slate-400 mt-2">Discover how our specialized travel tools simplify your journeys</p>
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Smart Travel Features at Your Service</h2>
+              <p className="text-slate-600 dark:text-slate-400 mt-2">Discover how our specialized travel tools simplify your journeys</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Feature 1 */}
-              <Card className="bg-slate-900/50 border-slate-900 hover:border-slate-800 transition-all duration-300 text-white p-6 shadow-xl relative group overflow-hidden">
+              <Card className="bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-900 hover:border-slate-300 dark:hover:border-slate-800 transition-all duration-300 text-slate-900 dark:text-white p-6 shadow-md hover:shadow-xl relative group overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/5 rounded-full blur-2xl group-hover:bg-teal-500/10 transition-colors" />
                 <CardHeader className="p-0 mb-4">
-                  <div className="h-12 w-12 bg-teal-500/10 rounded-xl flex items-center justify-center border border-teal-500/20 text-teal-400 mb-4 shrink-0">
+                  <div className="h-12 w-12 bg-teal-500/10 rounded-xl flex items-center justify-center border border-teal-500/20 text-teal-600 dark:text-teal-400 mb-4 shrink-0">
                     <Compass className="h-6 w-6" />
                   </div>
-                  <CardTitle className="text-xl font-bold text-white">Smart Travel Schedules</CardTitle>
+                  <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Smart Travel Schedules</CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <p className="text-sm text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     Browse verified day-by-day travel packages. Filter blueprints by category, duration, or budget, and organize your trips on your dashboard.
                   </p>
                 </CardContent>
               </Card>
 
               {/* Feature 2 */}
-              <Card className="bg-slate-900/50 border-slate-900 hover:border-slate-800 transition-all duration-300 text-white p-6 shadow-xl relative group overflow-hidden">
+              <Card className="bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-900 hover:border-slate-300 dark:hover:border-slate-800 transition-all duration-300 text-slate-900 dark:text-white p-6 shadow-md hover:shadow-xl relative group overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition-colors" />
                 <CardHeader className="p-0 mb-4">
-                  <div className="h-12 w-12 bg-amber-500/10 rounded-xl flex items-center justify-center border border-amber-500/20 text-amber-400 mb-4 shrink-0">
+                  <div className="h-12 w-12 bg-amber-500/10 rounded-xl flex items-center justify-center border border-amber-500/20 text-amber-600 dark:text-amber-400 mb-4 shrink-0">
                     <Receipt className="h-6 w-6" />
                   </div>
-                  <CardTitle className="text-xl font-bold text-white">Instant Expense Scanner</CardTitle>
+                  <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">Instant Expense Scanner</CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <p className="text-sm text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     Upload travel receipts to automatically extract merchant, category, date, and costs, keeping your trip budget on track effortless.
                   </p>
                 </CardContent>
               </Card>
 
               {/* Feature 3 */}
-              <Card className="bg-slate-900/50 border-slate-900 hover:border-slate-800 transition-all duration-300 text-white p-6 shadow-xl relative group overflow-hidden">
+              <Card className="bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-900 hover:border-slate-300 dark:hover:border-slate-800 transition-all duration-300 text-slate-900 dark:text-white p-6 shadow-md hover:shadow-xl relative group overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors" />
                 <CardHeader className="p-0 mb-4">
-                  <div className="h-12 w-12 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20 text-blue-400 mb-4 shrink-0">
+                  <div className="h-12 w-12 bg-blue-500/10 rounded-xl flex items-center justify-center border border-blue-500/20 text-blue-600 dark:text-blue-400 mb-4 shrink-0">
                     <MessageSquare className="h-6 w-6" />
                   </div>
-                  <CardTitle className="text-xl font-bold text-white">AI Travel Assistant</CardTitle>
+                  <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">AI Travel Assistant</CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  <p className="text-sm text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     Our AI Travel Copilot has direct access to your active dashboard stats. Ask questions, get budgeting tips, and plan daily events in real-time.
                   </p>
                 </CardContent>
@@ -412,12 +412,12 @@ export default function LandingPage() {
         </section>
 
         {/* SECTION 3: GLOBAL TRAVEL METRICS */}
-        <section className="py-16 bg-slate-900/40 border-t border-slate-900">
+        <section className="py-16 bg-white dark:bg-slate-900/40 border-t border-slate-200 dark:border-slate-900 transition-colors duration-200">
           <div className="max-w-6xl mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, idx) => (
                 <div key={idx} className="text-center space-y-1">
-                  <div className="text-3xl md:text-5xl font-black text-teal-400 tracking-tight">{stat.number}</div>
+                  <div className="text-3xl md:text-5xl font-black text-teal-600 dark:text-teal-400 tracking-tight">{stat.number}</div>
                   <div className="text-xs md:text-sm text-slate-500 font-medium uppercase tracking-wider">{stat.label}</div>
                 </div>
               ))}
@@ -426,12 +426,12 @@ export default function LandingPage() {
         </section>
 
         {/* SECTION 4: POPULAR CATEGORIES */}
-        <section className="py-20 px-4 bg-slate-950 border-t border-slate-900">
+        <section className="py-20 px-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 transition-colors duration-200">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
               <div>
-                <h2 className="text-3xl font-extrabold text-white tracking-tight">Explore Travel Styles</h2>
-                <p className="text-slate-400 mt-2">Filter itineraries by your travel mood and interest</p>
+                <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Explore Travel Styles</h2>
+                <p className="text-slate-600 dark:text-slate-400 mt-2">Filter itineraries by your travel mood and interest</p>
               </div>
               <div className="flex flex-wrap gap-2 mt-4 md:mt-0">
                 {categories.map((c) => (
@@ -442,7 +442,7 @@ export default function LandingPage() {
                     className={`text-xs font-semibold px-4 py-1.5 rounded-full border cursor-pointer ${
                       activeCategoryTab === c.name
                         ? "bg-teal-500 text-slate-950 hover:bg-teal-500 border-teal-400 hover:text-slate-950"
-                        : "border-slate-800 text-slate-400 hover:text-white"
+                        : "border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                     }`}
                   >
                     {c.name}
@@ -455,14 +455,14 @@ export default function LandingPage() {
             {categories.map(
               (c) =>
                 activeCategoryTab === c.name && (
-                  <Card key={c.name} className="bg-slate-900 border-slate-800 text-white p-6 shadow-xl md:p-8 flex flex-col md:flex-row items-center gap-6 animate-in fade-in zoom-in-95 duration-200">
-                    <div className="h-16 w-16 bg-teal-500/10 rounded-2xl border border-teal-500/20 flex items-center justify-center text-teal-400 shrink-0">
+                  <Card key={c.name} className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-6 shadow-xl md:p-8 flex flex-col md:flex-row items-center gap-6 animate-in fade-in zoom-in-95 duration-200">
+                    <div className="h-16 w-16 bg-teal-500/10 rounded-2xl border border-teal-500/20 flex items-center justify-center text-teal-600 dark:text-teal-400 shrink-0">
                       <Plane className="h-8 w-8" />
                     </div>
                     <div className="space-y-2 flex-grow text-center md:text-left">
-                      <h3 className="text-2xl font-black text-white">{c.name} Experiences</h3>
-                      <p className="text-sm text-slate-400 leading-relaxed max-w-xl">{c.desc}</p>
-                      <div className="flex items-center justify-center md:justify-start space-x-2 text-xs text-teal-400 font-semibold pt-1">
+                      <h3 className="text-2xl font-black text-slate-900 dark:text-white">{c.name} Experiences</h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">{c.desc}</p>
+                      <div className="flex items-center justify-center md:justify-start space-x-2 text-xs text-teal-600 dark:text-teal-400 font-semibold pt-1">
                         <ShieldCheck className="h-4 w-4" />
                         <span>{c.highlight}</span>
                       </div>
@@ -482,11 +482,11 @@ export default function LandingPage() {
         </section>
 
         {/* SECTION 5: INTERACTIVE CHAT PREVIEW SIMULATOR */}
-        <section className="py-20 px-4 bg-slate-900/20 border-t border-slate-900">
+        <section className="py-20 px-4 bg-slate-100/50 dark:bg-slate-900/20 border-t border-slate-200 dark:border-slate-900 transition-colors duration-200">
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h2 className="text-3xl font-extrabold text-white tracking-tight">Interactive AI Travel Assistance</h2>
-              <p className="text-slate-400 leading-relaxed text-sm">
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Interactive AI Travel Assistance</h2>
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">
                 Get an instant preview of how our persistent travel assistant behaves. Our Travel Copilot understands exactly where you are in your itinerary, tracking your budget and schedules.
               </p>
               <div className="space-y-3 text-sm">
@@ -495,8 +495,8 @@ export default function LandingPage() {
                   "Instant breakdown of expense & budget metrics",
                   "Actionable, personalized travel recommendations"
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center space-x-2 text-slate-300">
-                    <ShieldCheck className="h-4 w-4 text-teal-400" />
+                  <div key={idx} className="flex items-center space-x-2 text-slate-700 dark:text-slate-300">
+                    <ShieldCheck className="h-4 w-4 text-teal-600 dark:text-teal-400" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -512,20 +512,20 @@ export default function LandingPage() {
             </div>
 
             {/* Chat Simulator Widget Mock */}
-            <div className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden h-[380px] shadow-2xl flex flex-col justify-between">
-              <div className="bg-slate-900 px-4 py-3 border-b border-slate-800 flex justify-between items-center text-xs">
+            <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden h-[380px] shadow-2xl flex flex-col justify-between">
+              <div className="bg-slate-50 dark:bg-slate-900 px-4 py-3 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs">
                 <div className="flex items-center space-x-2">
-                  <BrainCircuit className="h-4 w-4 text-teal-400" />
-                  <span className="font-bold text-white">Travel Assistant Simulator</span>
+                  <BrainCircuit className="h-4 w-4 text-teal-600 dark:text-teal-400" />
+                  <span className="font-bold text-slate-900 dark:text-white">Travel Assistant Simulator</span>
                 </div>
-                <span className="bg-teal-500/10 border border-teal-500/30 text-teal-400 px-2 py-0.5 rounded text-[10px]">Active</span>
+                <span className="bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 px-2 py-0.5 rounded text-[10px]">Active</span>
               </div>
               <div className="p-4 space-y-4 overflow-y-auto flex-grow text-xs leading-relaxed no-scrollbar">
                 <div className="flex space-x-2 mr-auto max-w-[80%]">
-                  <div className="h-6 w-6 bg-slate-800 text-teal-400 rounded-full flex items-center justify-center shrink-0">
+                  <div className="h-6 w-6 bg-slate-100 dark:bg-slate-800 text-teal-600 dark:text-teal-400 rounded-full flex items-center justify-center shrink-0">
                     <BrainCircuit className="h-3 w-3" />
                   </div>
-                  <div className="bg-slate-800 text-slate-200 p-2.5 rounded-xl rounded-tl-none border border-slate-700/50">
+                  <div className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-2.5 rounded-xl rounded-tl-none border border-slate-200 dark:border-slate-700/50">
                     Hi! I see you have an upcoming trip to **Kyoto** and spent **$185** on Accommodation. Ask me to outline your daily plan!
                   </div>
                 </div>
@@ -538,18 +538,18 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="flex space-x-2 mr-auto max-w-[80%]">
-                  <div className="h-6 w-6 bg-slate-800 text-teal-400 rounded-full flex items-center justify-center shrink-0">
+                  <div className="h-6 w-6 bg-slate-100 dark:bg-slate-800 text-teal-600 dark:text-teal-400 rounded-full flex items-center justify-center shrink-0">
                     <BrainCircuit className="h-3 w-3" />
                   </div>
-                  <div className="bg-slate-800 text-slate-200 p-2.5 rounded-xl rounded-tl-none border border-slate-700/50">
+                  <div className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-2.5 rounded-xl rounded-tl-none border border-slate-200 dark:border-slate-700/50">
                     On Day 2 of your **Kyoto Pilgrimage**, you will:
                     • 🎋 Hike the Arashiyama Bamboo Grove.
                     • ⛩️ Explore Gion&apos;s historic wooden townhouses.
                   </div>
                 </div>
               </div>
-              <div className="p-3 bg-slate-900 border-t border-slate-800 flex space-x-2">
-                <Input placeholder="Message travel assistant..." className="bg-slate-950 border-slate-800 text-xs h-8 text-white" disabled />
+              <div className="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex space-x-2">
+                <Input placeholder="Message travel assistant..." className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-xs h-8 text-slate-900 dark:text-white" disabled />
                 <Button className="h-8 bg-teal-500 text-slate-950 text-xs font-bold" disabled>Send</Button>
               </div>
             </div>
@@ -557,11 +557,11 @@ export default function LandingPage() {
         </section>
 
         {/* SECTION 6: TESTIMONIALS */}
-        <section className="py-20 px-4 bg-slate-900/20 border-t border-slate-900">
+        <section className="py-20 px-4 bg-slate-100/40 dark:bg-slate-900/20 border-t border-slate-200 dark:border-slate-900 transition-colors duration-200">
           <div className="max-w-6xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="text-3xl font-extrabold text-white tracking-tight">Trusted by Explorers Worldwide</h2>
-              <p className="text-slate-400 mt-2">See how travelers streamline their journeys with AuraTravel</p>
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Trusted by Explorers Worldwide</h2>
+              <p className="text-slate-600 dark:text-slate-400 mt-2">See how travelers streamline their journeys with AuraTravel</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -582,16 +582,16 @@ export default function LandingPage() {
                   role: "Digital Nomad"
                 }
               ].map((t, idx) => (
-                <Card key={idx} className="bg-slate-900 border-slate-800 text-white p-6 shadow-xl flex flex-col justify-between">
-                  <CardContent className="p-0 text-slate-300 text-xs italic leading-relaxed mb-6">
+                <Card key={idx} className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-6 shadow-lg flex flex-col justify-between">
+                  <CardContent className="p-0 text-slate-600 dark:text-slate-300 text-xs italic leading-relaxed mb-6">
                     &ldquo;{t.quote}&rdquo;
                   </CardContent>
-                  <div className="flex items-center space-x-3 pt-4 border-t border-slate-800/40">
+                  <div className="flex items-center space-x-3 pt-4 border-t border-slate-200 dark:border-slate-800/40">
                     <div className="h-8 w-8 bg-teal-500 rounded-full flex items-center justify-center font-bold text-slate-950 uppercase shrink-0">
                       {t.author.charAt(0)}
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-white leading-none">{t.author}</h4>
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white leading-none">{t.author}</h4>
                       <span className="text-[10px] text-slate-500 mt-1 block leading-none">{t.role}</span>
                     </div>
                   </div>
@@ -602,21 +602,21 @@ export default function LandingPage() {
         </section>
 
         {/* SECTION 7: FAQ ACCORDION */}
-        <section className="py-20 px-4 bg-slate-950 border-t border-slate-900">
+        <section className="py-20 px-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 transition-colors duration-200">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-extrabold text-white tracking-tight text-center mb-12">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight text-center mb-12">Frequently Asked Questions</h2>
             <div className="space-y-4">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="border-b border-slate-900 pb-4">
+                <div key={idx} className="border-b border-slate-200 dark:border-slate-900 pb-4">
                   <button
                     onClick={() => setFaqOpen(faqOpen === idx ? null : idx)}
-                    className="w-full flex items-center justify-between text-left font-bold text-slate-200 hover:text-white py-2 focus:outline-none cursor-pointer"
+                    className="w-full flex items-center justify-between text-left font-bold text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white py-2 focus:outline-none cursor-pointer"
                   >
                     <span>{faq.question}</span>
-                    <ChevronDown className={`h-4 w-4 text-teal-400 transform transition-transform duration-250 ${faqOpen === idx ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-4 w-4 text-teal-600 dark:text-teal-400 transform transition-transform duration-250 ${faqOpen === idx ? "rotate-180" : ""}`} />
                   </button>
                   {faqOpen === idx && (
-                    <p className="text-slate-400 text-xs mt-2 leading-relaxed animate-in fade-in slide-in-from-top-1">
+                    <p className="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed animate-in fade-in slide-in-from-top-1">
                       {faq.answer}
                     </p>
                   )}
@@ -627,15 +627,15 @@ export default function LandingPage() {
         </section>
 
         {/* SECTION 8: NEWSLETTER / FINAL CTA */}
-        <section className="py-20 px-4 bg-slate-950 border-t border-slate-900 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-teal-500/5 via-slate-950 to-slate-950" />
-          <div className="max-w-4xl mx-auto bg-gradient-to-r from-slate-900 to-slate-900/60 border border-slate-800 rounded-2xl p-8 text-center space-y-6 shadow-2xl z-10 relative">
-            <h2 className="text-3xl font-black text-white">Subscribe to Travel Guides & Tips</h2>
-            <p className="text-slate-400 text-sm max-w-lg mx-auto">
+        <section className="py-20 px-4 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-900 relative transition-colors duration-200">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-teal-500/5 via-transparent to-slate-50 dark:to-slate-950" />
+          <div className="max-w-4xl mx-auto bg-gradient-to-r from-white to-slate-100 dark:from-slate-900 dark:to-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 text-center space-y-6 shadow-xl z-10 relative">
+            <h2 className="text-3xl font-black text-slate-900 dark:text-white">Subscribe to Travel Guides & Tips</h2>
+            <p className="text-slate-600 dark:text-slate-400 text-sm max-w-lg mx-auto">
               Get monthly emails on newly featured destination packages, travel guides, and exclusive budget hacks.
             </p>
             <form onSubmit={(e) => { e.preventDefault(); alert("Subscribed! Thank you."); }} className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
-              <Input type="email" placeholder="Enter your email" className="bg-slate-950 border-slate-800 text-white text-xs h-10 placeholder:text-slate-700" required />
+              <Input type="email" placeholder="Enter your email" className="bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white text-xs h-10 placeholder:text-slate-400 dark:placeholder:text-slate-700" required />
               <Button type="submit" className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold h-10 px-6 shrink-0 cursor-pointer">Subscribe</Button>
             </form>
           </div>

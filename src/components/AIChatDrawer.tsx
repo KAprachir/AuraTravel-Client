@@ -122,14 +122,14 @@ export default function AIChatDrawer() {
 
       {/* Expandable Chat Window */}
       {isOpen && (
-        <div className="w-[340px] sm:w-[380px] h-[520px] bg-slate-900/95 backdrop-blur-md border border-slate-800 rounded-2xl shadow-2xl flex flex-col justify-between overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-6">
+        <div className="w-[340px] sm:w-[380px] h-[520px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl flex flex-col justify-between overflow-hidden transition-all duration-300 animate-in fade-in slide-in-from-bottom-6 text-slate-900 dark:text-white">
           {/* Header */}
-          <div className="bg-slate-950 px-4 py-3 flex items-center justify-between border-b border-slate-800">
+          <div className="bg-slate-100 dark:bg-slate-950 px-4 py-3 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center space-x-2">
-              <Sparkles className="h-5 w-5 text-teal-400" />
+              <Sparkles className="h-5 w-5 text-teal-600 dark:text-teal-400" />
               <div>
-                <h3 className="text-sm font-bold text-white leading-tight">AuraTravel Copilot</h3>
-                <span className="text-[10px] text-teal-400 flex items-center">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">AuraTravel Copilot</h3>
+                <span className="text-[10px] text-teal-600 dark:text-teal-400 flex items-center">
                   <RefreshCw className="h-2.5 w-2.5 mr-1 animate-spin" />
                   Context Sync Active
                 </span>
@@ -139,7 +139,7 @@ export default function AIChatDrawer() {
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="h-7 w-7 text-slate-500 hover:text-white hover:bg-slate-800 rounded-full"
+              className="h-7 w-7 text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -157,7 +157,7 @@ export default function AIChatDrawer() {
                 {/* Avatar */}
                 <div
                   className={`h-7 w-7 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 ${
-                    msg.role === "user" ? "bg-teal-500 text-slate-950" : "bg-slate-800 text-teal-400"
+                    msg.role === "user" ? "bg-teal-500 text-slate-950" : "bg-slate-200 dark:bg-slate-800 text-teal-700 dark:text-teal-400"
                   }`}
                 >
                   {msg.role === "user" ? <User className="h-3 w-3" /> : <BrainCircuit className="h-3.5 w-3.5" />}
@@ -168,7 +168,7 @@ export default function AIChatDrawer() {
                   className={`p-3 rounded-xl text-xs leading-relaxed ${
                     msg.role === "user"
                       ? "bg-teal-500 text-slate-950 font-medium rounded-tr-none"
-                      : "bg-slate-800 text-slate-200 rounded-tl-none border border-slate-700/50"
+                      : "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none border border-slate-200 dark:border-slate-700/50"
                   }`}
                 >
                   <p className="whitespace-pre-line">{msg.text}</p>
@@ -179,13 +179,13 @@ export default function AIChatDrawer() {
             {/* Typing Indicator */}
             {loading && (
               <div className="flex items-center space-x-2 mr-auto max-w-[85%]">
-                <div className="h-7 w-7 rounded-full bg-slate-800 text-teal-400 flex items-center justify-center shrink-0">
+                <div className="h-7 w-7 rounded-full bg-slate-200 dark:bg-slate-800 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0">
                   <BrainCircuit className="h-3.5 w-3.5" />
                 </div>
-                <div className="bg-slate-800 border border-slate-700/50 p-3 rounded-xl rounded-tl-none flex space-x-1 items-center">
-                  <span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce delay-75" />
-                  <span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce delay-150" />
-                  <span className="w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce delay-225" />
+                <div className="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 p-3 rounded-xl rounded-tl-none flex space-x-1 items-center">
+                  <span className="w-1.5 h-1.5 bg-teal-500 rounded-full animate-bounce delay-75" />
+                  <span className="w-1.5 h-1.5 bg-teal-500 rounded-full animate-bounce delay-150" />
+                  <span className="w-1.5 h-1.5 bg-teal-500 rounded-full animate-bounce delay-225" />
                 </div>
               </div>
             )}
@@ -194,7 +194,7 @@ export default function AIChatDrawer() {
           </div>
 
           {/* Suggested Prompts & Input Area */}
-          <div className="p-3 bg-slate-950/60 border-t border-slate-800 space-y-3">
+          <div className="p-3 bg-slate-50 dark:bg-slate-950/60 border-t border-slate-200 dark:border-slate-800 space-y-3">
             {/* Chips (Hidden when loading) */}
             {!loading && messages.length <= 2 && (
               <div className="flex flex-wrap gap-1.5">
@@ -202,10 +202,10 @@ export default function AIChatDrawer() {
                   <button
                     key={prompt}
                     onClick={() => handleSendMessage(prompt)}
-                    className="text-[10px] bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-teal-500/30 text-slate-300 hover:text-white px-2.5 py-1 rounded-full transition-all flex items-center"
+                    className="text-[10px] bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 hover:border-teal-500/30 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white px-2.5 py-1 rounded-full transition-all flex items-center cursor-pointer shadow-sm"
                   >
                     <span>{prompt}</span>
-                    <ArrowRight className="h-2.5 w-2.5 ml-1 text-teal-400" />
+                    <ArrowRight className="h-2.5 w-2.5 ml-1 text-teal-600 dark:text-teal-400" />
                   </button>
                 ))}
               </div>
@@ -217,13 +217,13 @@ export default function AIChatDrawer() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask your travel copilot..."
-                className="bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus-visible:ring-teal-500 text-xs h-9 flex-1"
+                className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 focus-visible:ring-teal-500 text-xs h-9 flex-1"
                 disabled={loading}
               />
               <Button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="h-9 w-9 bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold p-0 shrink-0"
+                className="h-9 w-9 bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold p-0 shrink-0 cursor-pointer"
               >
                 <Send className="h-4 w-4" />
               </Button>
