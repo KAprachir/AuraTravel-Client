@@ -50,19 +50,19 @@ export default function HelpPage() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
       <Navbar />
 
       <main className="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
-          <h1 className="text-4xl font-extrabold text-white tracking-tight">Help Center & FAQs</h1>
-          <p className="text-slate-400">Search for setup instructions, privacy policies, and AI agent tips.</p>
+          <h1 className="text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Help Center & FAQs</h1>
+          <p className="text-slate-600 dark:text-slate-400">Search for setup instructions, privacy policies, and AI agent tips.</p>
         </div>
 
         {/* Search Bar */}
         <div className="relative max-w-md mx-auto mb-10">
-          <Search className="absolute left-3 top-3 h-5 w-5 text-slate-500" />
+          <Search className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
           <Input
             value={search}
             onChange={(e) => {
@@ -70,12 +70,12 @@ export default function HelpPage() {
               setOpenIndex(null);
             }}
             placeholder="Search help articles..."
-            className="pl-10 bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus-visible:ring-teal-500 w-full h-11"
+            className="pl-10 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 focus-visible:ring-teal-500 w-full h-11"
           />
         </div>
 
         {/* Filter Navigation */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8 border-b border-slate-900 pb-6">
+        <div className="flex flex-wrap justify-center gap-2 mb-8 border-b border-slate-200 dark:border-slate-900 pb-6">
           {[
             { id: "all", label: "All Topics" },
             { id: "getting-started", label: "Getting Started" },
@@ -90,10 +90,10 @@ export default function HelpPage() {
                 setActiveTab(tab.id);
                 setOpenIndex(null);
               }}
-              className={`text-xs font-semibold px-4 py-1.5 rounded-full border ${
+              className={`text-xs font-semibold px-4 py-1.5 rounded-full border cursor-pointer ${
                 activeTab === tab.id
                   ? "bg-teal-500 text-slate-950 hover:bg-teal-500 border-teal-400 hover:text-slate-950"
-                  : "border-slate-800 text-slate-400 hover:text-white"
+                  : "border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               {tab.label}
@@ -103,7 +103,7 @@ export default function HelpPage() {
 
         {/* Topics Accordion List */}
         {filteredTopics.length === 0 ? (
-          <div className="text-center py-12 bg-slate-900/40 rounded-xl border border-slate-850 text-slate-500 text-sm">
+          <div className="text-center py-12 bg-white dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-850 text-slate-500 text-sm">
             No help articles found matching your query.
           </div>
         ) : (
@@ -111,30 +111,30 @@ export default function HelpPage() {
             {filteredTopics.map((topic, idx) => (
               <div
                 key={idx}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-4 transition-colors"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 transition-colors shadow-sm"
               >
                 <button
                   onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                  className="w-full flex items-center justify-between text-left font-bold text-slate-200 hover:text-white focus:outline-none"
+                  className="w-full flex items-center justify-between text-left font-bold text-slate-900 dark:text-slate-200 hover:text-teal-600 dark:hover:text-white focus:outline-none cursor-pointer"
                 >
                   <span className="flex items-center">
                     {topic.category === "legal" ? (
-                      <ShieldAlert className="h-4 w-4 mr-2 text-teal-400" />
+                      <ShieldAlert className="h-4 w-4 mr-2 text-teal-600 dark:text-teal-400" />
                     ) : topic.category === "ai-copilot" ? (
-                      <Sparkles className="h-4 w-4 mr-2 text-teal-400" />
+                      <Sparkles className="h-4 w-4 mr-2 text-teal-600 dark:text-teal-400" />
                     ) : (
-                      <BookOpen className="h-4 w-4 mr-2 text-teal-400" />
+                      <BookOpen className="h-4 w-4 mr-2 text-teal-600 dark:text-teal-400" />
                     )}
                     {topic.question}
                   </span>
                   <ChevronDown
-                    className={`h-4 w-4 text-teal-400 transform transition-transform duration-250 ${
+                    className={`h-4 w-4 text-teal-600 dark:text-teal-400 transform transition-transform duration-250 ${
                       openIndex === idx ? "rotate-180" : ""
                     }`}
                   />
                 </button>
                 {openIndex === idx && (
-                  <p className="text-slate-400 text-xs mt-3 leading-relaxed border-t border-slate-800/60 pt-3">
+                  <p className="text-slate-600 dark:text-slate-400 text-xs mt-3 leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
                     {topic.answer}
                   </p>
                 )}

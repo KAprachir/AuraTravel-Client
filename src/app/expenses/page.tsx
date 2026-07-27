@@ -208,25 +208,25 @@ export default function ExpenseDashboard() {
 
   if (isPending || !session) {
     return (
-      <div className="min-h-screen bg-slate-950 flex justify-center items-center text-white">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex justify-center items-center text-slate-900 dark:text-white">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
       <Navbar />
 
       <main className="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
         {/* Dashboard Title */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center space-x-2">
-              <BrainCircuit className="h-8 w-8 text-teal-400" />
+            <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center space-x-2">
+              <BrainCircuit className="h-8 w-8 text-teal-600 dark:text-teal-400" />
               <span>Travel Expense Tracker</span>
             </h1>
-            <p className="text-slate-400 mt-1">Upload receipts or manually add travel expenses to track your budget.</p>
+            <p className="text-slate-600 dark:text-slate-400 mt-1">Upload receipts or manually add travel expenses to track your budget.</p>
           </div>
           <Button
             onClick={() => {
@@ -234,7 +234,7 @@ export default function ExpenseDashboard() {
               resetManualForm();
               setModalOpen(true);
             }}
-            className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold shrink-0"
+            className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold shrink-0 cursor-pointer"
           >
             <Plus className="mr-1.5 h-4 w-4" />
             Add Expense
@@ -242,7 +242,7 @@ export default function ExpenseDashboard() {
         </div>
 
         {error && (
-          <div className="bg-rose-500/15 border border-rose-500/30 text-rose-300 p-3 rounded-lg flex items-center space-x-2 text-sm mb-6">
+          <div className="bg-rose-500/15 border border-rose-500/30 text-rose-600 dark:text-rose-300 p-3 rounded-lg flex items-center space-x-2 text-sm mb-6">
             <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -250,22 +250,22 @@ export default function ExpenseDashboard() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-slate-900 border-slate-800 text-white shadow-lg">
+          <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-md">
             <CardHeader className="py-4">
               <CardDescription className="text-slate-500 font-semibold uppercase text-xs">Total Spent</CardDescription>
-              <CardTitle className="text-3xl font-black text-teal-400">${totalSpent.toLocaleString()}</CardTitle>
+              <CardTitle className="text-3xl font-black text-teal-600 dark:text-teal-400">${totalSpent.toLocaleString()}</CardTitle>
             </CardHeader>
           </Card>
-          <Card className="bg-slate-900 border-slate-800 text-white shadow-lg">
+          <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-md">
             <CardHeader className="py-4">
               <CardDescription className="text-slate-500 font-semibold uppercase text-xs">Total Receipts</CardDescription>
-              <CardTitle className="text-3xl font-black text-white">{receiptCount} Receipts</CardTitle>
+              <CardTitle className="text-3xl font-black text-slate-900 dark:text-white">{receiptCount} Receipts</CardTitle>
             </CardHeader>
           </Card>
-          <Card className="bg-slate-900 border-slate-800 text-white shadow-lg">
+          <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-md">
             <CardHeader className="py-4">
               <CardDescription className="text-slate-500 font-semibold uppercase text-xs">Average Expense</CardDescription>
-              <CardTitle className="text-3xl font-black text-white">${avgExpense.toLocaleString(undefined, { maximumFractionDigits: 2 })}</CardTitle>
+              <CardTitle className="text-3xl font-black text-slate-900 dark:text-white">${avgExpense.toLocaleString(undefined, { maximumFractionDigits: 2 })}</CardTitle>
             </CardHeader>
           </Card>
         </div>
@@ -273,7 +273,7 @@ export default function ExpenseDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
           {/* Uploader Section */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="bg-slate-900 border-slate-800 text-white p-6 flex flex-col items-center justify-center min-h-[250px] shadow-lg">
+            <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-6 flex flex-col items-center justify-center min-h-[250px] shadow-lg">
               <input
                 type="file"
                 ref={fileInputRef}
@@ -286,8 +286,8 @@ export default function ExpenseDashboard() {
                 <div className="text-center space-y-4">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto" />
                   <div>
-                    <p className="font-bold text-teal-400 animate-pulse flex items-center justify-center">
-                      <Sparkles className="mr-2 h-4 w-4 text-amber-400" />
+                    <p className="font-bold text-teal-600 dark:text-teal-400 animate-pulse flex items-center justify-center">
+                      <Sparkles className="mr-2 h-4 w-4 text-amber-500 dark:text-amber-400" />
                       Gemini Parsing Receipt...
                     </p>
                     <p className="text-xs text-slate-500 mt-1">Reading amount, items, and merchants</p>
@@ -296,18 +296,18 @@ export default function ExpenseDashboard() {
               ) : (
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="group flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-slate-800 hover:border-teal-500/50 rounded-xl p-8 hover:bg-slate-950/40 transition-all duration-300"
+                  className="group flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-slate-200 dark:border-slate-800 hover:border-teal-500/50 rounded-xl p-8 hover:bg-slate-50 dark:hover:bg-slate-950/40 transition-all duration-300 cursor-pointer"
                 >
-                  <UploadCloud className="h-12 w-12 text-slate-600 group-hover:text-teal-400 group-hover:scale-110 transition-all duration-300" />
-                  <span className="font-bold text-sm text-slate-300 mt-4 group-hover:text-white">Upload Travel Receipt</span>
-                  <span className="text-[10px] text-slate-600 mt-2 block">Supports PNG, JPG, PDF, TXT files</span>
+                  <UploadCloud className="h-12 w-12 text-slate-400 dark:text-slate-600 group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:scale-110 transition-all duration-300" />
+                  <span className="font-bold text-sm text-slate-700 dark:text-slate-300 mt-4 group-hover:text-slate-900 dark:group-hover:text-white">Upload Travel Receipt</span>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-600 mt-2 block">Supports PNG, JPG, PDF, TXT files</span>
                 </button>
               )}
             </Card>
 
             {/* Pie Chart Analytics */}
             {mounted && pieData.length > 0 && (
-              <Card className="bg-slate-900 border-slate-800 text-white p-4 shadow-lg">
+              <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-4 shadow-lg">
                 <CardHeader className="p-2 mb-2">
                   <CardTitle className="text-sm font-bold">Category Distribution</CardTitle>
                 </CardHeader>
@@ -343,7 +343,7 @@ export default function ExpenseDashboard() {
                           backgroundColor: COLORS[d.name as keyof typeof COLORS] || "#94a3b8"
                         }}
                       />
-                      <span className="text-slate-400 font-semibold">{d.name}</span>
+                      <span className="text-slate-600 dark:text-slate-400 font-semibold">{d.name}</span>
                     </div>
                   ))}
                 </div>
@@ -355,7 +355,7 @@ export default function ExpenseDashboard() {
           <div className="lg:col-span-2 space-y-6">
             {/* Monthly Trend */}
             {mounted && barData.length > 0 && (
-              <Card className="bg-slate-900 border-slate-800 text-white p-4 shadow-lg">
+              <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white p-4 shadow-lg">
                 <CardHeader className="p-2 mb-2">
                   <CardTitle className="text-sm font-bold">Monthly Expenditure Trend</CardTitle>
                 </CardHeader>
@@ -374,38 +374,38 @@ export default function ExpenseDashboard() {
 
             {/* Expenses List */}
             {isLoading ? (
-              <Card className="bg-slate-900 border-slate-800 p-6 space-y-3">
-                <div className="h-6 w-full bg-slate-850 rounded animate-pulse" />
-                <div className="h-6 w-full bg-slate-850 rounded animate-pulse" />
+              <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-6 space-y-3">
+                <div className="h-6 w-full bg-slate-100 dark:bg-slate-850 rounded animate-pulse" />
+                <div className="h-6 w-full bg-slate-100 dark:bg-slate-850 rounded animate-pulse" />
               </Card>
             ) : isError ? (
-              <div className="text-center py-6 bg-slate-900 border border-slate-850 text-slate-500">
+              <div className="text-center py-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-850 text-slate-500">
                 Failed to load expense list.
               </div>
             ) : expenses?.length === 0 ? (
-              <div className="text-center py-10 bg-slate-900/40 rounded-xl border border-slate-850 text-slate-500">
+              <div className="text-center py-10 bg-white dark:bg-slate-900/40 rounded-xl border border-slate-200 dark:border-slate-850 text-slate-500">
                 No travel expenses logged yet.
               </div>
             ) : (
-              <Card className="bg-slate-900 border-slate-800 overflow-hidden shadow-lg">
+              <Card className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 overflow-hidden shadow-lg text-slate-900 dark:text-white">
                 <Table>
-                  <TableHeader className="bg-slate-950">
-                    <TableRow className="border-slate-850 hover:bg-slate-950">
-                      <TableHead className="text-slate-400">Title</TableHead>
-                      <TableHead className="text-slate-400 hidden sm:table-cell">Merchant</TableHead>
-                      <TableHead className="text-slate-400 hidden sm:table-cell">Category</TableHead>
-                      <TableHead className="text-slate-400">Date</TableHead>
-                      <TableHead className="text-slate-400 text-right">Amount</TableHead>
-                      <TableHead className="text-slate-400 text-center hidden md:table-cell">Source</TableHead>
+                  <TableHeader className="bg-slate-100 dark:bg-slate-950">
+                    <TableRow className="border-slate-200 dark:border-slate-850 hover:bg-transparent">
+                      <TableHead className="text-slate-600 dark:text-slate-400">Title</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400 hidden sm:table-cell">Merchant</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400 hidden sm:table-cell">Category</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Date</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400 text-right">Amount</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400 text-center hidden md:table-cell">Source</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {expenses?.map((expense) => (
-                      <TableRow key={expense._id} className="border-slate-850 hover:bg-slate-850/40">
-                        <TableCell className="font-semibold text-white truncate max-w-[150px]">
+                      <TableRow key={expense._id} className="border-slate-200 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-slate-850/40">
+                        <TableCell className="font-semibold text-slate-900 dark:text-white truncate max-w-[150px]">
                           {expense.title}
                         </TableCell>
-                        <TableCell className="text-slate-300 hidden sm:table-cell truncate max-w-[120px]">
+                        <TableCell className="text-slate-700 dark:text-slate-300 hidden sm:table-cell truncate max-w-[120px]">
                           {expense.merchant || "—"}
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
@@ -415,18 +415,18 @@ export default function ExpenseDashboard() {
                               backgroundColor: COLORS[expense.category as keyof typeof COLORS] || "#94a3b8"
                             }}
                           />
-                          <span className="text-xs text-slate-300 align-middle">{expense.category}</span>
+                          <span className="text-xs text-slate-700 dark:text-slate-300 align-middle">{expense.category}</span>
                         </TableCell>
-                        <TableCell className="text-slate-400 text-xs">
+                        <TableCell className="text-slate-500 dark:text-slate-400 text-xs">
                           {new Date(expense.date).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
                         </TableCell>
-                        <TableCell className="text-right font-extrabold text-teal-400">
+                        <TableCell className="text-right font-extrabold text-teal-600 dark:text-teal-400">
                           ${expense.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                         </TableCell>
                         <TableCell className="text-center hidden md:table-cell">
                           {expense.confidenceScore < 1.0 ? (
                             <span
-                              className="bg-teal-500/10 border border-teal-500/30 text-teal-400 px-2 py-0.5 rounded text-[10px] font-bold"
+                              className="bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 px-2 py-0.5 rounded text-[10px] font-bold"
                               title={`Gemini matched with ${Math.round(expense.confidenceScore * 100)}% accuracy`}
                             >
                               AI ({Math.round(expense.confidenceScore * 100)}%)
@@ -447,22 +447,22 @@ export default function ExpenseDashboard() {
 
       {/* Confirmation & Edit Modal */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-md">
+        <DialogContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center space-x-2">
               {parsedData ? (
                 <>
-                  <Sparkles className="h-5 w-5 text-teal-400 animate-bounce" />
-                  <span>Review AI Extracted Expense</span>
+                  <Sparkles className="h-5 w-5 text-teal-600 dark:text-teal-400 animate-bounce" />
+                  <span className="text-slate-900 dark:text-white">Review AI Extracted Expense</span>
                 </>
               ) : (
                 <>
-                  <Plus className="h-5 w-5 text-teal-400" />
-                  <span>Log New Expense</span>
+                  <Plus className="h-5 w-5 text-teal-600 dark:text-teal-400" />
+                  <span className="text-slate-900 dark:text-white">Log New Expense</span>
                 </>
               )}
             </DialogTitle>
-            <DialogDescription className="text-slate-400">
+            <DialogDescription className="text-slate-500 dark:text-slate-400">
               {parsedData
                 ? `Verification required. Gemini successfully parsed the receipt with ${Math.round(parsedData.confidenceScore * 100)}% confidence score.`
                 : "Add details below to record a travel expenditure."}
@@ -471,21 +471,21 @@ export default function ExpenseDashboard() {
 
           <form onSubmit={handleConfirmSave} className="space-y-4 pt-2">
             <div className="space-y-1">
-              <label className="text-xs text-slate-400 font-semibold block">Expense Description *</label>
+              <label className="text-xs text-slate-600 dark:text-slate-400 font-semibold block">Expense Description *</label>
               <Input
                 required
                 value={manualTitle}
                 onChange={(e) => setManualTitle(e.target.value)}
                 placeholder="E.g., Dinner at Sushi Ginza"
-                className="bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500"
+                className="bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus-visible:ring-teal-500"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs text-slate-400 font-semibold block">Amount ($) *</label>
+                <label className="text-xs text-slate-600 dark:text-slate-400 font-semibold block">Amount ($) *</label>
                 <div className="relative">
-                  <DollarSign className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+                  <DollarSign className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
                   <Input
                     type="number"
                     step="0.01"
@@ -494,16 +494,16 @@ export default function ExpenseDashboard() {
                     value={manualAmount}
                     onChange={(e) => setManualAmount(e.target.value)}
                     placeholder="0.00"
-                    className="pl-8 bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500"
+                    className="pl-8 bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus-visible:ring-teal-500"
                   />
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="text-xs text-slate-400 font-semibold block">Category *</label>
+                <label className="text-xs text-slate-600 dark:text-slate-400 font-semibold block">Category *</label>
                 <select
                   value={manualCategory}
                   onChange={(e) => setManualCategory(e.target.value as any)}
-                  className="w-full h-10 px-3 rounded-md bg-slate-950 border border-slate-850 text-white text-sm focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full h-10 px-3 rounded-md bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-850 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-1 focus:ring-teal-500"
                 >
                   {["Accommodation", "Transport", "Dining", "Activities", "Shopping", "Misc"].map((cat) => (
                     <option key={cat} value={cat}>
@@ -516,58 +516,58 @@ export default function ExpenseDashboard() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-xs text-slate-400 font-semibold block">Merchant</label>
+                <label className="text-xs text-slate-600 dark:text-slate-400 font-semibold block">Merchant</label>
                 <div className="relative">
-                  <Landmark className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+                  <Landmark className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
                   <Input
                     value={manualMerchant}
                     onChange={(e) => setManualMerchant(e.target.value)}
                     placeholder="Merchant Name"
-                    className="pl-8 bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500"
+                    className="pl-8 bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus-visible:ring-teal-500"
                   />
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="text-xs text-slate-400 font-semibold block">Transaction Date</label>
+                <label className="text-xs text-slate-600 dark:text-slate-400 font-semibold block">Transaction Date</label>
                 <div className="relative">
-                  <Calendar className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+                  <Calendar className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
                   <Input
                     type="date"
                     required
                     value={manualDate}
                     onChange={(e) => setManualDate(e.target.value)}
-                    className="pl-8 bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500"
+                    className="pl-8 bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus-visible:ring-teal-500"
                   />
                 </div>
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs text-slate-400 font-semibold block">Location</label>
+              <label className="text-xs text-slate-600 dark:text-slate-400 font-semibold block">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-500" />
+                <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
                 <Input
                   value={manualLocation}
                   onChange={(e) => setManualLocation(e.target.value)}
                   placeholder="City, Country"
-                  className="pl-8 bg-slate-950 border-slate-800 text-white focus-visible:ring-teal-500"
+                  className="pl-8 bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus-visible:ring-teal-500"
                 />
               </div>
             </div>
 
-            <DialogFooter className="pt-4 border-t border-slate-800 mt-4">
+            <DialogFooter className="pt-4 border-t border-slate-200 dark:border-slate-800 mt-4">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setModalOpen(false)}
-                className="border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800"
+                className="border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={saveMutation.isPending}
-                className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold"
+                className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold cursor-pointer"
               >
                 {saveMutation.isPending ? "Saving..." : "Save Expense"}
               </Button>

@@ -17,11 +17,14 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '22'
         cache: 'npm'
 
+    - name: Debug Workspace Files
+      run: pwd && ls -la
+
     - name: Install Dependencies
-      run: npm ci
+      run: npm ci --legacy-peer-deps --verbose
 
     - name: TypeScript Validation
       run: npx tsc --noEmit

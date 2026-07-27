@@ -35,9 +35,28 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                  } else {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
         <Providers>
           {children}
           <AIChatDrawer />
